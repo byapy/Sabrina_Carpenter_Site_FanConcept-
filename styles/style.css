@@ -44,6 +44,7 @@
     display: none;
 }
 body{
+    margin: 0;
     opacity: 0;
     animation: fadeIn 1.5s ease forwards;
 }
@@ -249,6 +250,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 20px;
 }
 .shop-vynil-feed{
     display: grid;
@@ -271,11 +273,82 @@ body{
     overflow-wrap: break-word;
     
 }
-.vynil-item .btn{
-    margin: auto auto 0 !important;
-    width: min(100%, 180px) !important;
+.shop-cart-button{
+    display: inline-block;
+    margin: auto auto 0;
+    width: min(100%, 180px);
     min-height: 42px;
     white-space: normal;
+    padding: 0.375rem 0.75rem;
+    color: #000;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: #f8f9fa;
+    border: 1px solid #212529;
+    border-radius: 0.375rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.shop-cart-button:hover:not(:disabled){
+    background-color: #e2e6ea;
+}
+.product-actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: auto;
+}
+.product-actions .shop-cart-button{
+    margin: 0;
+    max-width: calc(100% - 50px);
+}
+.wishlist-button{
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    align-items: center;
+    justify-content: center;
+    color: #212529;
+    background-color: #f8f9fa;
+    border: 1px solid #212529;
+    border-radius: 50%;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+.wishlist-button svg{
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.wishlist-button:hover{
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #212529;
+    transform: scale(1.05);
+}
+.wishlist-button:hover svg path{
+    fill: #dc3545;
+    stroke: #dc3545;
+}
+.wishlist-button:focus-visible{
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.3);
+}
+.shop-cart-button:focus-visible,
+.cart-action-button:focus-visible{
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.25);
 }
 .sold-out-button{
     opacity: 0.45;
@@ -456,6 +529,39 @@ body{
     gap: 10px;
 }
 
+.cart-action-button{
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    color: #fff;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.cart-checkout-button{
+    background-color: #212529;
+    border-color: #212529;
+}
+.cart-checkout-button:hover{
+    background-color: #424649;
+    border-color: #373b3e;
+}
+.cart-back-button{
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.cart-back-button:hover{
+    background-color: #bb2d3b;
+    border-color: #b02a37;
+}
+
 .carrito-vacio{
     text-align: center;
 }
@@ -531,8 +637,8 @@ body{
         min-height: 0;
     }
 
-    .vynil-item .btn{
-        width: 100% !important;
+    .shop-cart-button{
+        width: 100%;
     }
 }
 

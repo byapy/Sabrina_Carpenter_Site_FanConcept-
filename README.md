@@ -4,4 +4,4 @@ This project is a fan concept website inspired by Sabrina Carpenter. So far, I h
 
 I have also added a footer with links to her social media accounts and a disclaimer to clarify that this is a fan-made project and is not affiliated with her official team.
 
-At the moment, I am mainly working with HTML and CSS, using Bootstrap for some resources on the site.
+At the moment, I am mainly working with HTML, CSS, and TypeScript for the site's interactions.
