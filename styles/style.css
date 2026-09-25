@@ -3,7 +3,6 @@
     --nav-text-font-nav: "Playfair Display", serif;
     --h1-main-titles:  "Cormorant Garamond", serif;
 }
-/*  ----- Header ----- */
 .main-header{
     padding-top: 1rem;
     padding-left: 2rem;
@@ -41,6 +40,9 @@
     text-decoration-thickness: 1.5px;
 
 }
+.menu-toggle{
+    display: none;
+}
 body{
     opacity: 0;
     animation: fadeIn 1.5s ease forwards;
@@ -50,7 +52,6 @@ body{
     opacity: 1;
   }
 }
-/*  ----- Content ----- */
 .page-content{
     background-image: url(../src/images/sabrina-hero-banner2.webp);
     background-size: cover;
@@ -100,70 +101,58 @@ body{
 .button-play-preview:hover{
     transform: scale(1.2);
 }
-/*  ----- footer ----- */
 .main-footer{
-    display: flex;
-    flex-direction: row;
     position: fixed;
-    bottom: 0;
-    left: 0;
+    inset: auto 0 0;
     z-index: 10;
-    background-color: transparent;
     width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-}
-.social-network{
-    list-style-type: none;
+    padding: 0 1rem 1.25rem;
+    box-sizing: border-box;
     display: flex;
-    flex-direction: row;
-    gap: 3.0rem;
-    flex-wrap: wrap;
-    height: auto;
-    margin: 0;
-    margin-left: 1rem;
-    padding: 0;
-    overflow: hidden;
+    justify-content: space-between;
+    align-items: flex-end;
+    background-color: transparent;
 }
 .social-network-div{
     display: flex;
-    align-self: self-end;
-    margin-bottom: 20px;
+    margin: 0;
+}
+.social-network{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 .footer-social-links{
-    
-    text-align: center;
     color: var(--nav-text-color);
-    text-decoration: none;
     font-family: var(--nav-text-font-nav);
-
+    text-align: center;
+    text-decoration: none;
 }
 .social-item{
     display: flex;
-    gap: 10px;
+    gap: 0.625rem;
 }
 .disclaimer-footer{
     display: flex;
     flex-direction: column;
-    text-align: right;
-    padding: 0;
+    align-items: flex-end;
+    gap: 0.25rem;
     margin: 0;
-    margin-right: 1rem;
+    padding: 0;
+    text-align: right;
 }
 .footer-copy{
-    font-size: 1.3rem;
+    margin: 0;
     font-family: var(--h1-main-titles);
+    font-size: 1.3rem;
     text-shadow:
         0 5px 4px rgba(0, 0, 0, 0.9),
         0 6px 50px rgba(0, 0, 0, 0.7);
-    overflow: hidden;
-    margin: 0;
-    margin-bottom: 20px;
-    padding: 0;
 }
 
-/*STORE FEED */
 @font-face {
     font-family: "Irregular-Caps-Regular";
     src: url("fonts/Irregular-Caps-Regular.otf") format("opentype");
@@ -174,6 +163,7 @@ body{
 
 .shop-body{
     --article-title-font: "Irregular-Caps-Regular", "Cormorant Garamond", serif;
+    --shop-header-height: 92px;
     min-height: 100vh;
     opacity: 1;
     animation: none;
@@ -193,10 +183,25 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+}
+.shop-main-header .main-nav{
+    flex: 1;
+    min-width: 0;
 }
 .shop-main-header .nav-items-list{
     justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: clamp(0.75rem, 2vw, 2.5rem);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.shop-main-header .nav-items-list::-webkit-scrollbar{
+    display: none;
+}
+.shop-main-header .main-nav-link{
+    white-space: nowrap;
 }
 .top-button{
     color: var(--nav-text-color);
@@ -230,11 +235,11 @@ body{
 .store-options-nav{
     display: flex;
     gap: 1.5rem;
+    flex: 0 0 auto;
 }
 
-/* Vynils */
 .shop-main{
-    margin: 100px auto;
+    margin: var(--shop-header-height) auto 100px;
     padding: 40px;
     width: min(100% - 20px, 1180px);
     box-sizing: border-box;
@@ -246,14 +251,12 @@ body{
     align-items: center;
 }
 .shop-vynil-feed{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     width: 100%;
     max-width: 1040px;
     gap: clamp(10px, 2vw, 20px);
-    justify-content: center;
     align-items: stretch;
-    flex-wrap: wrap;
     min-width: 0;
 }
 .vynil-item{
@@ -264,13 +267,15 @@ body{
     width: 100%;
     max-width: none;
     min-width: 0;
-    flex: 0 1 calc((100% - 60px) / 4);
     font-family: var(--h1-main-titles);
     overflow-wrap: break-word;
     
 }
 .vynil-item .btn{
     margin: auto auto 0 !important;
+    width: min(100%, 180px) !important;
+    min-height: 42px;
+    white-space: normal;
 }
 .sold-out-button{
     opacity: 0.45;
@@ -383,7 +388,13 @@ body{
     font-family: var(--article-title-font);
     text-align: left;
     width: 100%;
-    flex-basis: 100%;
+    grid-column: 1 / -1;
+}
+
+.shop-body .main-footer{
+    position: static;
+    padding: 10px;
+    color: white;
 }
 
 .cart-wish-feed{
@@ -437,8 +448,6 @@ body{
     padding: 1.2rem;
 }
 
-
-
 .botones-cart{
     margin-top: 20px;
     display: flex;
@@ -450,6 +459,13 @@ body{
 .carrito-vacio{
     text-align: center;
 }
+
+@media (max-width: 900px){
+    .shop-vynil-feed{
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 700px){
     .cart-wish-layout{
         flex-direction: column;
@@ -460,5 +476,120 @@ body{
         padding: 0 0 1rem;
         border-right: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+}
+
+@media (max-width: 680px){
+    .shop-body{
+        --shop-header-height: 72px;
+        background-image: none;
+        background-color: black;
+    }
+
+    .shop-main-header{
+        padding: 0.75rem;
+    }
+
+    .shop-main-header .main-nav-link{
+        font-size: 1.1rem;
+    }
+
+    .shop-main-header .store-options-nav{
+        gap: 0.5rem;
+    }
+
+    .shop-main-header .top-button{
+        padding: 6px 10px;
+    }
+
+    .shop-main{
+        margin: var(--shop-header-height) auto 40px;
+        padding: 24px;
+        width: 100%;
+    }
+
+    .shop-vynil-feed{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .vynil-item > h2{
+        min-height: 58px;
+        font-size: clamp(18px, 5vw, 24px);
+    }
+}
+
+@media (max-width: 420px){
+    .shop-main{
+        padding: 16px;
+    }
+
+    .shop-vynil-feed{
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .vynil-item > h2{
+        min-height: 0;
+    }
+
+    .vynil-item .btn{
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 410px){
+    .main-header,
+    .shop-main-header{
+        padding: 0.75rem;
+    }
+
+    .main-header .main-nav,
+    .shop-main-header .main-nav{
+        position: relative;
+        flex: 0 0 auto;
+    }
+
+    .menu-toggle{
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--nav-text-color);
+        background-color: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .menu-toggle svg{
+        width: 26px;
+        height: 26px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+    }
+
+    .main-header .nav-items-list,
+    .shop-main-header .nav-items-list{
+        display: none;
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        left: 0;
+        width: min(280px, calc(100vw - 1.5rem));
+        padding: 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        background-color: rgba(0, 0, 0, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 4px;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    .main-nav.is-open .nav-items-list{
+        display: flex;
     }
 }

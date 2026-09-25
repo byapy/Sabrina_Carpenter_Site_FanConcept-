@@ -15,7 +15,12 @@
 <body>
     <header class="main-header">
         <nav class="main-nav">
-            <ul class="nav-items-list">
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 7h16M4 12h16M4 17h16"></path>
+                </svg>
+            </button>
+            <ul class="nav-items-list" id="primary-navigation">
                 <li><a class="main-nav-link" href="index.html">Home</a></li>
                 <li><a class="main-nav-link" href="music.html">Music</a></li>
                 <li><a class="main-nav-link" href="gallery.html">Gallery</a></li>
@@ -74,6 +79,7 @@
             <p class="footer-copy">Fan-made concept website. Not affiliated with Sabrina Carpenter or her official team.</p>
         </div>
     </footer>
+    <script src="js/navigation.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
