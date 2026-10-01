@@ -252,7 +252,7 @@ body{
     align-items: center;
     border-radius: 20px;
 }
-.shop-vynil-feed{
+.shop-feed{
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     width: 100%;
@@ -261,7 +261,7 @@ body{
     align-items: stretch;
     min-width: 0;
 }
-.vynil-item{
+.shop-item{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -355,37 +355,48 @@ body{
     cursor: not-allowed;
     pointer-events: none;
 }
-.vynil-item a{
+.shop-item a{
     width: 100%;
 }
-.vynil-item > h2{
+.article-title{
+    margin: 0;
+    padding: 0;
+}
+.article-title > h2{
     font-family: var(--article-title-font);
     width: 100%;
     min-height: 70px;
-    margin: 10px 0 16px;
+    margin: 0;
     font-size: clamp(20px, 2.2vw, 28px);
     line-height: 1.1;
     max-width: 100%;
+    padding: 0;
 }
-.vynil-item figure{
+.shop-item figure{
     margin: 0;
 }
-.vynil-item figure img{
+
+.shop-item .prices{
+    margin-top: auto;
+    margin-bottom: 8px;
+    padding: 0;
+}
+.shop-item figure img{
     display: block;
     height: 100%;
     object-fit: cover;
     width: 100%;
 }
-.shop-vynil-figure{
+.item-figure{
     position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
 }
-.shop-vynil-figure:hover .img-normal{
+.item-figure:has(.img-alt):hover .img-normal{
     animation: normalImage 2s infinite ease-in-out;
 }
-.shop-vynil-figure:hover .img-alt{
+.item-figure:has(.img-alt):hover .img-alt{
     animation: hoverImage 2s infinite ease-in-out;
 }
 .limited-vers{
@@ -567,7 +578,7 @@ body{
 }
 
 @media (max-width: 900px){
-    .shop-vynil-feed{
+    .shop-feed{
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
@@ -614,11 +625,11 @@ body{
         width: 100%;
     }
 
-    .shop-vynil-feed{
+    .shop-feed{
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .vynil-item > h2{
+    .shop-item > h2{
         min-height: 58px;
         font-size: clamp(18px, 5vw, 24px);
     }
@@ -629,11 +640,11 @@ body{
         padding: 16px;
     }
 
-    .shop-vynil-feed{
+    .shop-feed{
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .vynil-item > h2{
+    .shop-item > h2{
         min-height: 0;
     }
 
