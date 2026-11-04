@@ -1,4 +1,10 @@
+/* 1. Todos los @import van al inicio absoluto del archivo */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 @import "tailwindcss";
 
-/* Tus personalizaciones de Tailwind */
-
+/* 2. Variables de tema para Tailwind v4 */
+@theme {
+  --font-nav: "Playfair Display", serif;
+  --font-title: "Cormorant Garamond", serif;
+  --color-nav-text: #ffffff;
+}

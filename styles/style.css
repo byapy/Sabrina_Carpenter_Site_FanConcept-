@@ -32,9 +32,9 @@
 
 }
 .main-nav-link:hover{
-    text-decoration: underline;
-    text-decoration-color: black;
-    text-decoration-thickness: 1.5px;
+    transform: scale(1,5px);
+    color: #212529;
+    text-shadow: #e2e6ea;
 
 }
 .menu-toggle{
@@ -76,6 +76,10 @@ body{
     z-index: 1;
 }
 
+.h2-title-alt{
+    font-family: var(--h1-main-titles);
+
+}
 
 #h1-title,
 #h2-title, .hero-p {
@@ -85,6 +89,7 @@ body{
         0 2px 4px rgba(0, 0, 0, 0.9),
         0 6px 20px rgba(0, 0, 0, 0.7);
 }
+
 
 #h1-title {
     font-size: 4rem;
@@ -220,7 +225,7 @@ body{
         0 6px 20px rgba(0, 0, 0, 0.7);
     cursor: pointer;
 }
-.cart-button-icon{
+.user-head-options{
     width: 22px;
     height: 22px;
     fill: none;
@@ -229,6 +234,7 @@ body{
     stroke-linecap: round;
     stroke-linejoin: round;
 }
+
 .top-button:hover{
     background-color: rgba(0, 0, 0, 0.48);
 }
@@ -618,6 +624,7 @@ body{
     .shop-main-header{
         padding: 0.75rem;
     }
+
 
     .shop-main-header .main-nav-link{
         font-size: 1.1rem;
