@@ -6,12 +6,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="src/icons/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="src/icons/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="styles/output.css">
     <link rel="stylesheet" href="styles/style.css">
     <title>Carrito de Compras</title>
 </head>
 <body>
-    <main class="cart-wish-feed">
+    <main class="cart-wish-feed bordr rounded-md shadow-md">
         <header>
             <h2>Lista de Deseados</h2>
         </header>
@@ -29,16 +30,32 @@
                 <div class="carrito-vacio">
                     <h5>Tu Carro de Compras esta vacio.</h5>
                     <p>Aun no tienes productos en tu carrito</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icono-carrito-vacio-x">
-  <!-- Ruedas -->
-  <circle cx="9" cy="21" r="1"></circle>
-  <circle cx="20" cy="21" r="1"></circle>
-  <!-- Estructura del carrito -->
-  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-  <!-- La 'X' superpuesta para indicar que está vacío -->
-  <line x1="10" y1="7" x2="18" y2="15"></line>
-  <line x1="18" y1="7" x2="10" y2="15"></line>
-</svg>
+                    <figure class="carrito-svg">    
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="64"
+                            height="64"
+                            viewBox="0 0 64 64"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            >
+                            <!-- Carrito -->
+                            <path d="M8 12h6l6 29h27l7-21H17" />
+                            <path d="M20 41l-2 5a3 3 0 0 0 3 4h26" />
+
+
+                            <circle cx="25" cy="55" r="2.5" />
+                            <circle cx="45" cy="55" r="2.5" />
+
+
+                            <circle cx="51" cy="12" r="9" fill="#fff" stroke="#ef4444" stroke-width="1.5"/>
+                            <path d="M48.5 9.5l5 5m0-5l-5 5" stroke="#ef4444" stroke-width="1.8"/>
+                        </svg>
+                    </figure>
+
                     
                 </div>
 
@@ -61,8 +78,8 @@
             </ul>
         </div>
         <div class="disclaimer-footer">
-            <p class="footer-copy">© 2026 Sabrina Carpenter Fan Concept. All rights reserved.</p>
-            <p class="footer-copy">Fan-made concept website. Not affiliated with Sabrina Carpenter or her official team.</p>
+            <p class="footer-copy text-shadow-lg/20">© 2026 Sabrina Carpenter Fan Concept. All rights reserved.</p>
+            <p class="footer-copy text-shadow-lg/20">Fan-made concept website. Not affiliated with Sabrina Carpenter or her official team.</p>
         </div>
     </footer>
 </body>

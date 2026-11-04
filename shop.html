@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="src/icons/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="src/icons/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="styles/output.css">
     <link rel="stylesheet" href="styles/style.css">
     <title>Sabrina Carpenter - Store</title>
 </head>
@@ -20,11 +21,11 @@
                 </svg>
             </button>
             <ul class="nav-items-list" id="shop-navigation">
-                <li><a class="main-nav-link" href="index.html">Home</a></li>
-                <li><a class="main-nav-link" href="music.html">Music</a></li>
-                <li><a class="main-nav-link" href="gallery.html">Gallery</a></li>
-                <li><a class="main-nav-link" href="tour.html">Tour</a></li>
-                <li><a class="main-nav-link" href="shop.html">Shop</a></li>
+                <li><a class="main-nav-link text-shadow-lg/30" href="index.html">Home</a></li>
+                <li><a class="main-nav-link text-shadow-lg/30" href="music.html">Music</a></li>
+                <li><a class="main-nav-link text-shadow-lg/30" href="gallery.html">Gallery</a></li>
+                <li><a class="main-nav-link text-shadow-lg/30" href="tour.html">Tour</a></li>
+                <li><a class="main-nav-link text-shadow-lg/30" href="shop.html">Shop</a></li>
             </ul>
         </nav>
         <div class="store-options-nav">
@@ -51,10 +52,10 @@
         </div>
         
     </header>
-    <main class="shop-main">
-        <h2 class="shop-titles">Exclusive Vynil</h2>
-        <section class="shop-feed">
-
+    <main class="shop-main rounded-xl  ">
+        
+        <section class="shop-feed select-none overflow-auto  scrollbar-thin">
+        <h2 class="shop-titles text-xl">Exclusive Vynil</h2>
             <article class="shop-item">
                 <a href="ejemplo.html">
                     <figure class="item-figure">
@@ -152,12 +153,92 @@
             </article>
 
 
+            <h2 class="shop-titles text-xl">Amazing Clothes</h2>
 
-            <h2 class="shop-titles">Amazing Clothes</h2>
+            <article class="shop-item">
+                <a href="ejemplo.html">
+                    <figure class="item-figure">
+                        <div class="stock-label">
+                            <h2 class="stock-label-text">Sold Out</h2>
+                        </div>
+                        <img src="src/articls/plspls-zip.webp" class=" img-normal" alt="Front">
+                    </figure>       
+                </a>
+                <div class="article-title">
+                    <h2>Please Please Please Zip Hoodie</h2>
+                </div>
+                <div class="price-box">
+                    <h2 class="prices">$75.00</h2>
+                </div>
+                <div class="product-actions">
+                    <button type="button" class="shop-cart-button sold-out-button" disabled">Add to Cart</button>
+                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
+                </div>
+            </article>
 
+            <article class="shop-item">
+                <a href="ejemplo.html">
+                    <figure class="item-figure">
+                        <div class="stock-label">
+                            <h2 class="stock-label-text">Sold Out</h2>
+                        </div>
+                        <img src="src/articls/GotYouBlocked_Front.webp" class=" img-normal" alt="Front">
+                        <img src="src/articls/GotYouBlockedTee.webp" class="img-alt" alt="Front">
+                    </figure>       
+                </a>
+                <div class="article-title">
+                    <h2>got you blocked tee</h2>
+                </div>
+                <div class="price-box">
+                    <h2 class="prices">$40.00</h2>
+                </div>
+                <div class="product-actions">
+                    <button type="button" class="shop-cart-button sold-out-button" disabled">Add to Cart</button>
+                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
+                </div>
+            </article>
+
+            <article class="shop-item">
+                <a href="ejemplo.html">
+                    <figure class="item-figure">
+                        <div class="limited-edic">
+                            <h2 class="limited-vers">Limited Edition</h2>
+                        </div>
+                        <img src="src/articls/SNS_brown_baby_tee.webp" class=" img-normal" alt="Front">
+                    </figure>       
+                </a>
+                <div class="article-title">
+                    <h2>Short n' Sweet Tour Baby Tee</h2>
+                </div>
+                <div class="price-box">
+                    <h2 class="prices">$35.00</h2>
+                </div>
+                <div class="product-actions">
+                    <button type="button" class="shop-cart-button">Add to Cart</button>
+                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
+                </div>
+            </article>
+
+
+            <article class="shop-item">
+                <a href="ejemplo.html">
+                    <figure class="item-figure">
+                        <img src="src/articls/expresso-trucker-hat.webp" class=" img-normal" alt="Front">
+                    </figure>       
+                </a>
+                <div class="article-title">
+                    <h2>Espresso Embroidered Trucker Hat</h2>
+                </div>
+                <div class="price-box">
+                    <h2 class="prices">$30.00</h2>
+                </div>
+                <div class="product-actions">
+                    <button type="button" class="shop-cart-button">Add to Cart</button>
+                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
+                </div>
+            </article>
             
-            
-            <h2 class="shop-titles">Beatiful Articles</h2>
+            <h2 class="shop-titles text-xl">Beatiful Articles</h2>
 
             <article class="shop-item">
                 <a href="ejemplo.html">
@@ -186,6 +267,43 @@
                 </a>
                 <div class="article-title">
                     <h2>Manchild Crushed Cigarette Box Ceramic Tray</h2>
+                </div>
+                <div class="price-box">
+                    <h2 class="prices">$30.00</h2>
+                </div>
+                <div class="product-actions">
+                    <button type="button" class="shop-cart-button">Add to Cart</button>
+                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
+                </div>
+            </article>
+
+            <article class="shop-item">
+                <a href="ejemplo.html">
+                    <figure class="item-figure">
+                        <img src="src/articls/piggy-bank.webp" class=" img-normal" alt="Front">
+                    </figure>       
+                </a>
+                <div class="article-title">
+                    <h2>Tour Camper Van Piggy Bank</h2>
+                </div>
+                <div class="price-box">
+                    <h2 class="prices">$25.00</h2>
+                </div>
+                <div class="product-actions">
+                    <button type="button" class="shop-cart-button">Add to Cart</button>
+                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
+                </div>
+            </article>
+
+            
+            <article class="shop-item">
+                <a href="ejemplo.html">
+                    <figure class="item-figure">
+                        <img src="src/articls/gogo_juice_zi.webp" class=" img-normal" alt="Front">
+                    </figure>       
+                </a>
+                <div class="article-title">
+                    <h2>Go Go Juice Flask Bag Charm</h2>
                 </div>
                 <div class="price-box">
                     <h2 class="prices">$30.00</h2>
@@ -232,8 +350,8 @@
             </ul>
         </div>
         <div class="disclaimer-footer">
-            <p class="footer-copy">© 2026 Sabrina Carpenter Fan Concept. All rights reserved.</p>
-            <p class="footer-copy">Fan-made concept website. Not affiliated with Sabrina Carpenter or her official team.</p>
+            <p class="footer-copy text-shadow-lg/20">© 2026 Sabrina Carpenter Fan Concept. All rights reserved.</p>
+            <p class="footer-copy text-shadow-lg/20">Fan-made concept website. Not affiliated with Sabrina Carpenter or her official team.</p>
         </div>
     </footer>
     

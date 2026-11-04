@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="src/icons/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="styles/output.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Login</title>
+</head>
+<body class="bg-[url(/src/images/sabrina-hero-banner2.webp)] bg-auto bg-no-repeat">
+    <main class="login-content flex justify-center-safe">
+        <div class="form-box rounded-md bg-white p-5">
+            <form action="">
+                <h2 class="text-2xl text-center">Login</h2>
+                <label for="">Email Address</label>
+                <input type="email" name="" id="eml_email" data-placeholder="email" 
+                class="w-full 
+                h-12 p-3
+                placeholder-gray-200
+                invalid:border-red-500  
+                after:ml-0.5
+                after:text-red-500 after:content-['*']
+                outline-2 outline-orange-100 focus:outline-orange-300
+                rounded-b-sm
+                
+                ">
+
+                <label for="">Password</label>
+                <input type="password" name="" id="pwd_password"  data-placeholder="password"  class="
+                w-full 
+                h-12 
+                p-3
+                placeholder-gray-200
+                outline-2 outline-orange-100 focus:outline-orange-300
+                rounded-b-sm
+                ">
+                
+                <button type="submit" class="w-full rounded-2xl  h-12 bg-orange-100  hover:bg-orange-200 mt-5" >Submit</button>
+            </form>
+            <br>
+            <hr class="border-gray-400">
+            <section class="register-box">
+                <h2 class="text-2xl text-center opacity-50 mt-5">Or</h2>
+            </section>
+        </div>
+        
+    </main>
+
+<script src="js/auth.js"></script>
+</body>
+</html>
