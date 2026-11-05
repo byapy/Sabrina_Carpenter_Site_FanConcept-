@@ -1,47 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="src/icons/favicon.webp" type="image/x-icon">
-    <link rel="stylesheet" href="styles/output.css">
-    <link rel="stylesheet" href="styles/style.css">
-    <title>Sabrina Carpenter - Home</title>
-</head>
-<body>
-    <header class="main-header">
-        <nav class="main-nav">
-            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M4 7h16M4 12h16M4 17h16"></path>
-                </svg>
-            </button>
-            <ul class="nav-items-list" id="primary-navigation">
-                <li><a class="main-nav-link text-shadow-lg/30" href="index.html">Home</a></li>
-                <li><a class="main-nav-link text-shadow-lg/30" href="music.html">Music</a></li>
-                <li><a class="main-nav-link text-shadow-lg/30" href="gallery.html">Gallery</a></li>
-                <li><a class="main-nav-link text-shadow-lg/30" href="tour.html">Tour</a></li>
-                <li><a class="main-nav-link text-shadow-lg/30" href="shop.html">Shop</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main class="page-content">
-        <h1 id="h1-title">Sabrina Carpenter</h1>
-        <h2 id="h2-title">"Man´s Best Friend" Out Now</h2>
-        <p class="hero-p">Stream Now!</p>
-            <a href="album.html" class="button-play-preview">
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-play-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z"/>
-                </svg>
-            </a> 
-    </main>
-
-
-    <footer class="main-footer">
+<footer class="main-footer">
         <div class="social-network-div">
             <ul class="social-network">
                 
@@ -79,6 +36,3 @@
             <p class="footer-copy">Fan-made concept website. Not affiliated with Sabrina Carpenter or her official team.</p>
         </div>
     </footer>
-    <script src="js/navigation.js"></script>
-</body>
-</html>

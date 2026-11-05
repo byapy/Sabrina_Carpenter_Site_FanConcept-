@@ -65,20 +65,9 @@ body{
     text-align: center;
 }
 
-.page-content::before{
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-}
 .page-content > * {
     position: relative;
     z-index: 1;
-}
-
-.h2-title-alt{
-    font-family: var(--h1-main-titles);
-
 }
 
 #h1-title,
@@ -648,10 +637,6 @@ body{
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .shop-item > h2{
-        min-height: 58px;
-        font-size: clamp(18px, 5vw, 24px);
-    }
 }
 
 @media (max-width: 420px){
@@ -661,10 +646,6 @@ body{
 
     .shop-feed{
         grid-template-columns: minmax(0, 1fr);
-    }
-
-    .shop-item > h2{
-        min-height: 0;
     }
 
     .shop-cart-button{

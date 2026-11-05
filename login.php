@@ -13,7 +13,7 @@
     <title>Sabrina Carpenter - Login</title>
 </head>
 <body class="relative min-h-screen">
-    <div class="fixed inset-0 -z-10 bg-black  bg-[url(/src/images/sabrina-hero-banner2.webp)] bg-cover bg-scroll  bg-no-repeat bg-center md:bg-fixed blur-xs ">
+    <div class="fixed inset-0 -z-10 bg-black  bg-[url(src/images/sabrina-hero-banner2.webp)] bg-cover bg-scroll  bg-no-repeat bg-center md:bg-fixed blur-xs ">
 
     </div>
     <header>
