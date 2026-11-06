@@ -44,7 +44,7 @@ try {
 <body class="shop-body">
     <header class="shop-main-header">
         <?php include 'layouts/navbar.php'; ?>
-        <div class="store-options-nav">
+        <div class="store-options-nav flex">
             <?php if ($isAuthenticated): ?>
                 <a href="cart.php" id="carritoICON" class="top-button" aria-label="Shopping cart">
                     <svg class="user-head-options" viewBox="0 0 24 24" aria-hidden="true">

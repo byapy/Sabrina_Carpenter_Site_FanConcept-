@@ -624,6 +624,31 @@ body{
     border-color: #b02a37;
 }
 
+#carrito-mostrar{
+    max-height: 50vh;
+    overflow-y: auto;
+}
+.carrito{
+    display: flex;
+
+
+}
+
+.producto-img{
+    width: 150px;
+    display: block;
+}
+.info-producto{
+    display: flex;
+    flex-direction: column;
+    
+
+
+}
+.producto-price{
+    text-align: right;
+    font-weight: bold;
+}
 .carrito-vacio{
     text-align: center;
 }
@@ -633,9 +658,11 @@ body{
     justify-content: center;
 }
 
+.article-options{
+    display: flex;
+    height: 50px;
 
-
-
+}
 
 
 

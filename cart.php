@@ -24,13 +24,34 @@
             </aside>
 
             <section class="contenido-switch">
-                <div id="carrito">
+                <div id="carrito-mostrar">
+
+                    <article class="carrito">
+                        <figure class="producto-img">
+                            <img src="src/articls/ceramic-tray.webp" alt="producto">
+                        </figure>
+                        <div class="info-producto">
+                            <h2 class="font-bold">Product 1</h2>
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                            <span class="producto-price">$45</span>
+                        </div>
+                        <div class="article-options">
+                            <button type="button" class="rounded-xs border p-3 block bg-red-300 hover:bg-amber-400">
+                                Delete
+                            </button>
+                        </div>
+                        
+                    </article>
+
+                    
+
+                    
 
                 </div>
-                <div class="carrito-vacio">
+                <div class="carrito-vacio " hidden>
                     <h5>Tu Carro de Compras esta vacio.</h5>
                     <p>Aun no tienes productos en tu carrito</p>
-                    <figure class="carrito-svg">    
+                    <figure class="carrito-svg" >    
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="64"
