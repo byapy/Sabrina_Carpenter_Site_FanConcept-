@@ -1,3 +1,32 @@
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/repositories/ProductRepository.php';
+
+session_start();
+
+$currentUserName = is_string($_SESSION['user']['name'] ?? null) ? $_SESSION['user']['name'] : null;
+$isAuthenticated = $currentUserName !== null;
+
+// Puedes cambiar libremente los encabezados visibles de cada categoría aquí.
+$categoryTitles = [
+    1 => 'Exclusive Vinyl',
+    2 => 'Amazing Clothes',
+    3 => 'Beautiful Articles',
+];
+
+$catalog = [];
+$catalogError = '';
+
+try {
+    foreach (ProductRepository::create()->findPublicCatalog() as $product) {
+        $catalog[(int) $product['categoria_id']][] = $product;
+    }
+} catch (PDOException $exception) {
+    error_log('No fue posible cargar el catálogo: ' . $exception->getMessage());
+    $catalogError = 'No se pudo cargar el catálogo en este momento.';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +35,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Playfair+Display:ital,wght@0,400..900&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="src/icons/favicon.webp" type="image/x-icon">
     <link rel="stylesheet" href="styles/output.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -14,308 +43,85 @@
 </head>
 <body class="shop-body">
     <header class="shop-main-header">
-        <?php
-            include 'layouts/navbar.php';
-        ?>
+        <?php include 'layouts/navbar.php'; ?>
         <div class="store-options-nav">
-            <a href="cart.php"> <button id="carritoICON" type="button" class="top-button" aria-label="Shopping cart">
-            <svg class="user-head-options" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M6.3 6h15.2l-1.7 8.4H8.1L6.3 6Z"></path>
-                <path d="M6.3 6 5.8 3.5H2.5"></path>
-                <path d="M9 18.5h.1"></path>
-                <path d="M18 18.5h.1"></path>
-            </svg>
-            </button></a>
-            
-            <a href="cart.php">
-            <button type="button" class="top-button" aria-label="Shopping cart">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="20"
-                height="20"
-                fill="pink">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-            </button></a>
-
-            <a href="login.php"> <button id="" type="button" class="top-button">
-            <svg class="user-head-options" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="8" r="4"></circle>
-                <path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path>
-            </svg>
-            </button></a>
+            <?php if ($isAuthenticated): ?>
+                <a href="cart.php" id="carritoICON" class="top-button" aria-label="Shopping cart">
+                    <svg class="user-head-options" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.3 6h15.2l-1.7 8.4H8.1L6.3 6Z"></path><path d="M6.3 6 5.8 3.5H2.5"></path><path d="M9 18.5h.1"></path><path d="M18 18.5h.1"></path>
+                    </svg>
+                </a>
+                <div class="account-controls">
+                    <span class="flex h-9 border g-3 rounded-md  border-b-sky-50 bg-black/30" aria-label="Usuario autenticado">
+                        <svg class="w-10 justify-self-center fill-current text-amber-50" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path></svg>
+                        <span class=" p-1">
+                            <?= htmlspecialchars($currentUserName, ENT_QUOTES, 'UTF-8') ?>
+                        </span>
+                        
+                    </span>
+                    <a href="logout.php" class="rounded-md bg-black/30 h-9 flex border border-b-sky-50 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-8  content-center">
+                            <path d="M 52 20 H 78 C 82.4 20 86 23.6 86 28 V 72 C 86 76.4 82.4 80 78 80 H 52" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M 64 50 H 14 M 32 32 L 14 50 L 32 68" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+            <?php else: ?>
+                <a href="login.php" class="top-button" aria-label="Iniciar sesión">
+                    <svg class="user-head-options" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path></svg>
+                </a>
+            <?php endif; ?>
         </div>
-        
     </header>
-    <main class="shop-main rounded-xl  ">
-        
-        <section class="shop-feed select-none overflow-auto  scrollbar-thin">
-        <h2 class="shop-titles text-xl">Exclusive Vynil</h2>
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <div class="stock-label">
-                            <h2 class="stock-label-text">Sold Out</h2>
+    <main class="shop-main rounded-xl">
+        <section class="shop-feed select-none">
+            <?php if ($catalogError !== ''): ?>
+                <p role="alert"><?= htmlspecialchars($catalogError, ENT_QUOTES, 'UTF-8') ?></p>
+            <?php endif; ?>
+
+            <?php foreach ($catalog as $categoryId => $products): ?>
+                <?php $categoryTitle = $categoryTitles[$categoryId] ?? $products[0]['categoria_nombre']; ?>
+                <h2 class="shop-titles text-xl"><?= htmlspecialchars((string) $categoryTitle, ENT_QUOTES, 'UTF-8') ?></h2>
+                <?php foreach ($products as $product): ?>
+                    <?php
+                    $isSoldOut = (int) $product['stock'] === 0 || $product['estado_nombre'] === 'Agotado';
+                    $isPreOrder = $product['estado_nombre'] === 'Pre Venta';
+                    $frontImage = (string) ($product['imagen_front'] ?? '');
+                    $altImage = (string) ($product['imagen_alt'] ?? '');
+                    $productName = (string) $product['nombre'];
+                    ?>
+                    <article class="shop-item">
+                        <a href="ejemplo.html">
+                            <figure class="item-figure">
+                                <?php if ($isSoldOut): ?>
+                                    <div class="stock-label"><h2 class="stock-label-text">Sold Out</h2></div>
+                                <?php elseif ($isPreOrder): ?>
+                                    <div class="limited-edic"><h2 class="limited-vers">Pre-order</h2></div>
+                                <?php endif; ?>
+                                <?php if ($altImage !== ''): ?>
+                                    <img src="<?= htmlspecialchars($altImage, ENT_QUOTES, 'UTF-8') ?>" class="img-alt" alt="<?= htmlspecialchars($productName, ENT_QUOTES, 'UTF-8') ?>">
+                                <?php endif; ?>
+                                <?php if ($frontImage !== ''): ?>
+                                    <img src="<?= htmlspecialchars($frontImage, ENT_QUOTES, 'UTF-8') ?>" class="img-normal" alt="<?= htmlspecialchars($productName, ENT_QUOTES, 'UTF-8') ?>">
+                                <?php endif; ?>
+                            </figure>
+                        </a>
+                        <div class="article-title"><h2><?= htmlspecialchars($productName, ENT_QUOTES, 'UTF-8') ?></h2></div>
+                        <div class="price-box"><h2 class="prices">$<?= number_format((float) $product['precio'], 2, '.', ',') ?></h2></div>
+                        <div class="product-actions">
+                            <?php if (!$isAuthenticated && !$isSoldOut): ?>
+                                <a href="login.php?form=register" class="shop-cart-button">Add to Cart</a>
+                            <?php else: ?>
+                                <button type="button" class="shop-cart-button<?= $isSoldOut ? ' sold-out-button' : '' ?>" <?= $isSoldOut ? 'disabled' : '' ?>>Add to Cart</button>
+                            <?php endif; ?>
+                            <a class="wishlist-button" href="cart.php" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
                         </div>
-                        <img src="src/vynil/Short_n_Sweet/SnSDeluxe.webp" class="img-alt" alt="main">
-                        <img src="src/vynil/Short_n_Sweet/SNSD2C_Front02.webp" class="img-normal" alt="Front">
-                    </figure>
-                </a>
-                <div class="article-title">
-                    <h2>Short n' Sweet (Deluxe) </h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$39.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button sold-out-button" disabled>Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg>
-                    </a>
-                </div>
-            </article>
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <div class="limited-edic">
-                            <h2 class="limited-vers">Limited Edition</h2>
-                        </div>
-                        <img src="src/vynil/Mans_Best_Friend/MBF_01_recrop_BACK.webp" class="img-alt" alt="main">
-                        <img src="src/vynil/Mans_Best_Friend/MBF_01_recrop_COVER.webp" class=" img-normal" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>Man's Best Friend  D2C Luxe Packaging </h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$45.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-            
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <div class="stock-label">
-                            <h2 class="stock-label-text">Sold Out</h2>
-                        </div>
-                        <img src="src/vynil/Feather7/Feather_Front01.webp" class="img-alt" alt="main">
-                        <img src="src/vynil/Feather7/Feather_Front02.webp" class="img-normal" alt="Front">
-                    </figure>
-                </a>
-                <div class="article-title">
-                    <h2>Feather 7" Vinyl</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$14.99</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button sold-out-button" disabled>Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg>
-                    </a>
-                </div>
-            </article>
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <div class="stock-label">
-                            <h2 class="stock-label-text">Sold Out</h2>
-                        </div>
-                        <img src="src/vynil/tears7/tears_front.webp" class="img-" alt="main">
-                        <img src="src/vynil/tears7/tears_front01.webp" class="img-alt" alt="Front">
-                    </figure>
-                </a>
-                <div class="article-title">
-                    <h2>Tears 7in Single</h2>
-                </div>
-
-                <div class="price-box">
-                    <h2 class="prices">$14.99</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button sold-out-button" disabled>Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg>
-                    </a>
-                </div>
-            </article>
-
-
-            <h2 class="shop-titles text-xl">Amazing Clothes</h2>
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <div class="stock-label">
-                            <h2 class="stock-label-text">Sold Out</h2>
-                        </div>
-                        <img src="src/articls/plspls-zip.webp" class=" img-normal" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>Please Please Please Zip Hoodie</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$75.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button sold-out-button" disabled">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <div class="stock-label">
-                            <h2 class="stock-label-text">Sold Out</h2>
-                        </div>
-                        <img src="src/articls/GotYouBlocked_Front.webp" class=" img-normal" alt="Front">
-                        <img src="src/articls/GotYouBlockedTee.webp" class="img-alt" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>got you blocked tee</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$40.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button sold-out-button" disabled">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <div class="limited-edic">
-                            <h2 class="limited-vers">Limited Edition</h2>
-                        </div>
-                        <img src="src/articls/SNS_brown_baby_tee.webp" class=" img-normal" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>Short n' Sweet Tour Baby Tee</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$35.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <img src="src/articls/expresso-trucker-hat.webp" class=" img-normal" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>Espresso Embroidered Trucker Hat</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$30.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-            
-            <h2 class="shop-titles text-xl">Beatiful Articles</h2>
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <img src="src/articls/puppy-keychain.webp" class=" img-normal" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>Man's Best Friend Puppy Keychain</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$22.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-
-            
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <img src="src/articls/ceramic-tray.webp" class=" img-normal" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>Manchild Crushed Cigarette Box Ceramic Tray</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$30.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <img src="src/articls/piggy-bank.webp" class=" img-normal" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>Tour Camper Van Piggy Bank</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$25.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-
-            
-            <article class="shop-item">
-                <a href="ejemplo.html">
-                    <figure class="item-figure">
-                        <img src="src/articls/gogo_juice_zi.webp" class=" img-normal" alt="Front">
-                    </figure>       
-                </a>
-                <div class="article-title">
-                    <h2>Go Go Juice Flask Bag Charm</h2>
-                </div>
-                <div class="price-box">
-                    <h2 class="prices">$30.00</h2>
-                </div>
-                <div class="product-actions">
-                    <button type="button" class="shop-cart-button">Add to Cart</button>
-                    <a class="wishlist-button" href="cart.html" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
-                </div>
-            </article>
-
+                    </article>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
         </section>
     </main>
-    <?php
-        include 'layouts/footer.php';
-    ?>
-    
+    <?php include 'layouts/footer.php'; ?>
     <script src="js/navigation.js"></script>
     <script src="js/store.js"></script>
 </body>
