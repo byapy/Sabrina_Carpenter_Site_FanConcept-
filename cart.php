@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles/style.css">
     <title>Sabrina Carpenter - Cart</title>
 </head>
-<body>
+<body class="cart-page">
     <main class="cart-wish-feed bordr rounded-md shadow-md">
         <header>
             <h2>Lista de Deseados</h2>
@@ -26,21 +26,47 @@
             <section class="contenido-switch">
                 <div id="carrito-mostrar">
 
-                    <article class="carrito">
-                        <figure class="producto-img">
+                    <article class="carrito grid grid-cols-4 gap-3 max-[490px]:grid-cols-2">
+                        <figure class="producto-img col-span-1 max-[490px]:col-span-2">
                             <img src="src/articls/ceramic-tray.webp" alt="producto">
                         </figure>
-                        <div class="info-producto">
+                        <div class="info-producto col-span-2">
                             <h2 class="font-bold">Product 1</h2>
                             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            <span class="producto-price">$45</span>
+                            <div class="product-purchase-details">
+                                <div class="product-price-card">
+                                    <span class="product-detail-label">Price</span>
+                                    <strong class="producto-price">$45</strong>
+                                </div>
+                                <div class="quantity-control" aria-label="Cantidad del producto">
+                                    <span class="product-detail-label">Quantity</span>
+                                    <div class="quantity-stepper">
+                                        <button type="button" class="quantity-button" aria-label="Disminuir cantidad">−</button>
+                                        <output class="quantity-value">1</output>
+                                        <button type="button" class="quantity-button" aria-label="Aumentar cantidad">+</button>
+                                        <button type="button" class="delete-product-button rounded-md border p-3 block bg-red-300 hover:bg-red-400" aria-label="Eliminar producto">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+         width="24"
+         height="24"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="m15 9-6 6m0-6 6 6"/>
+    </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="article-options">
-                            <button type="button" class="rounded-xs border p-3 block bg-red-300 hover:bg-amber-400">
-                                Delete
-                            </button>
-                        </div>
+
                         
+
+
+
                     </article>
 
                     
@@ -86,8 +112,8 @@
             </section>
         </div>
         <section class="botones-cart">
-            <a href="" id="boton-comprar"> <button class="button cart-action-button cart-checkout-button">Continuar al pago </button></a>
-            <a href="shop.html"> <button class="button cart-action-button cart-back-button">Regresar</button> </a>
+            <a href="" id="boton-comprar"> <button class="button cart-action-button cart-checkout-button">Pay </button></a>
+            <a href="shop.html"> <button class="button cart-action-button cart-back-button">Back</button> </a>
         </section>
         
     </main>
@@ -98,10 +124,7 @@
                 
             </ul>
         </div>
-        <div class="disclaimer-footer">
-            <p class="footer-copy text-shadow-lg/20">© 2026 Sabrina Carpenter Fan Concept. All rights reserved.</p>
-            <p class="footer-copy text-shadow-lg/20">Fan-made concept website. Not affiliated with Sabrina Carpenter or her official team.</p>
-        </div>
     </footer>
+
 </body>
 </html>

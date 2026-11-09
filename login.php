@@ -18,8 +18,8 @@ require_once __DIR__ . '/controllers/auth.php';
     <title>Sabrina Carpenter - Login</title>
 </head>
 <body class="relative min-h-screen">
-    <div class="fixed inset-0 -z-10 bg-black  bg-[url(src/images/sabrina-hero-banner2.webp)] bg-cover bg-scroll  bg-no-repeat bg-center md:bg-fixed blur-xs ">
-
+    <div class="fondo  md:bg-fixed blur-xs ">
+    
     </div>
     <header>
         <button type="button" onclick="history.back()"  class="outline-1 rounded-2xl border-amber-700 p-2 min-h-5 bg-black/40 text-white font-bold m-3 hover:bg-black/50">
@@ -128,11 +128,11 @@ require_once __DIR__ . '/controllers/auth.php';
                 my-3
                 ">
                 <label for="pwd_register" class="block">Password</label>
-                <input type="password" name="pwd_register" id="pwd_register" minlength="8" autocomplete="new-password"
+                <input type="password" name="pwd_register" id="pwd_register" minlength="8" autocomplete="new-password" data-placeholder="contrasena"
                 class="w-full h-12 p-4 placeholder-stone-400 outline-2 outline-yellow-500 focus:outline-orange-500 transition hover:outline-yellow-400 rounded-b-sm my-3" required>
 
                 <label for="pwd_register_confirmation" class="block">Confirm Password</label>
-                <input type="password" name="pwd_register_confirmation" id="pwd_register_confirmation" minlength="8" autocomplete="new-password"
+                <input type="password" name="pwd_register_confirmation" id="pwd_register_confirmation" minlength="8" autocomplete="new-password" data-placeholder="contrasena"
                 class="w-full h-12 p-4 placeholder-stone-400 outline-2 outline-yellow-500 focus:outline-orange-500 transition hover:outline-yellow-400 rounded-b-sm my-3" required>
 
                 <button class="w-2/3 rounded-2xl block mx-auto h-12 bg-orange-100 hover:bg-orange-200 mt-5 border border-amber-400" name="register_submit" value="1" type="submit">Create Account</button>

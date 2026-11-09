@@ -24,7 +24,9 @@ try {
     }
 } catch (PDOException $exception) {
     error_log('No fue posible cargar el catálogo: ' . $exception->getMessage());
-    $catalogError = 'No se pudo cargar el catálogo en este momento.';
+    $catalogError = "Oops, our little shopping moment got interrupted! 💋 
+    We're having trouble loading the collection right now. 
+    Please try again in a little while, darling.";
 }
 ?>
 <!DOCTYPE html>

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="styles/style.css">
     <title>Sabrina Carpenter - Home</title>
 </head>
-<body>
+<body class="home-page">
     <header class="main-header">
         <?php
             include 'layouts/navbar.php';
