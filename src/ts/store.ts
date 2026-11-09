@@ -2,6 +2,7 @@ const carrito = document.querySelector<HTMLButtonElement>("#carritoICON");
 const imagen = document.querySelector<HTMLImageElement>(".img-alt");
 const botonProducto = document.querySelectorAll<HTMLButtonElement>(".shop-item button");
 
+/* Lo de añadir productos al carrito */ 
 function agregarCarrito(evento: MouseEvent){
     const boton = evento.currentTarget as HTMLButtonElement;
     const producto = boton.parentElement;
@@ -44,3 +45,21 @@ botonProducto.forEach((boton) => {
     boton.addEventListener("click", agregarCarrito);
 });
 
+/*Pagina del carrito */
+
+const carritoCompras = document.querySelector<HTMLDivElement>("#carrito-mostrar");
+const carritoArticulos = document.querySelectorAll<HTMLElement>(".carrito-articulo");
+
+console.log(carritoCompras);
+console.log(carritoArticulos);
+
+carritoArticulos.forEach(articulo => {
+
+    const precio = articulo.querySelector(".producto-price");
+    console.log(precio);
+    const precioNumerico = Number(precio?.textContent?.replace("$",""));
+    console.log("El precio es de", precioNumerico, "dolares");
+    
+    
+
+});

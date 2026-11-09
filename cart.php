@@ -26,7 +26,7 @@
             <section class="contenido-switch">
                 <div id="carrito-mostrar">
 
-                    <article class="carrito grid grid-cols-4 gap-3 max-[490px]:grid-cols-2">
+                    <article class="carrito-articulo grid grid-cols-4 gap-3 max-[490px]:grid-cols-2">
                         <figure class="producto-img col-span-1 max-[490px]:col-span-2">
                             <img src="src/articls/ceramic-tray.webp" alt="producto">
                         </figure>
@@ -46,27 +46,98 @@
                                         <button type="button" class="quantity-button" aria-label="Aumentar cantidad">+</button>
                                         <button type="button" class="delete-product-button rounded-md border p-3 block bg-red-300 hover:bg-red-400" aria-label="Eliminar producto">
                                             <svg xmlns="http://www.w3.org/2000/svg"
-         width="24"
-         height="24"
-         viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2"
-         stroke-linecap="round"
-         stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="m15 9-6 6m0-6 6 6"/>
-    </svg>
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"/>
+                                                <path d="m15 9-6 6m0-6 6 6"/>
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </article>
 
-                        
+                    <article class="carrito-articulo grid grid-cols-4 gap-3 max-[490px]:grid-cols-2">
+                        <figure class="producto-img col-span-1 max-[490px]:col-span-2">
+                            <img src="src/articls/ceramic-tray.webp" alt="producto">
+                        </figure>
+                        <div class="info-producto col-span-2">
+                            <h2 class="font-bold">Product 1</h2>
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                            <div class="product-purchase-details">
+                                <div class="product-price-card">
+                                    <span class="product-detail-label">Price</span>
+                                    <strong class="producto-price">$45</strong>
+                                </div>
+                                <div class="quantity-control" aria-label="Cantidad del producto">
+                                    <span class="product-detail-label">Quantity</span>
+                                    <div class="quantity-stepper">
+                                        <button type="button" class="quantity-button" aria-label="Disminuir cantidad">−</button>
+                                        <output class="quantity-value">1</output>
+                                        <button type="button" class="quantity-button" aria-label="Aumentar cantidad">+</button>
+                                        <button type="button" class="delete-product-button rounded-md border p-3 block bg-red-300 hover:bg-red-400" aria-label="Eliminar producto">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"/>
+                                                <path d="m15 9-6 6m0-6 6 6"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-
-
+                    <article class="carrito-articulo grid grid-cols-4 gap-3 max-[490px]:grid-cols-2">
+                        <figure class="producto-img col-span-1 max-[490px]:col-span-2">
+                            <img src="src/articls/ceramic-tray.webp" alt="producto">
+                        </figure>
+                        <div class="info-producto col-span-2">
+                            <h2 class="font-bold">Product 1</h2>
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                            <div class="product-purchase-details">
+                                <div class="product-price-card">
+                                    <span class="product-detail-label">Price</span>
+                                    <strong class="producto-price">$45</strong>
+                                </div>
+                                <div class="quantity-control" aria-label="Cantidad del producto">
+                                    <span class="product-detail-label">Quantity</span>
+                                    <div class="quantity-stepper">
+                                        <button type="button" class="quantity-button" aria-label="Disminuir cantidad">−</button>
+                                        <output class="quantity-value">1</output>
+                                        <button type="button" class="quantity-button" aria-label="Aumentar cantidad">+</button>
+                                        <button type="button" class="delete-product-button rounded-md border p-3 block bg-red-300 hover:bg-red-400" aria-label="Eliminar producto">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"/>
+                                                <path d="m15 9-6 6m0-6 6 6"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </article>
 
                     
@@ -125,6 +196,6 @@
             </ul>
         </div>
     </footer>
-
+<script src="js/store.js"></script>
 </body>
 </html>

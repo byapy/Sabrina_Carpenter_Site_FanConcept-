@@ -2,6 +2,7 @@
 const carrito = document.querySelector("#carritoICON");
 const imagen = document.querySelector(".img-alt");
 const botonProducto = document.querySelectorAll(".shop-item button");
+/* Lo de añadir productos al carrito */
 function agregarCarrito(evento) {
     const boton = evento.currentTarget;
     const producto = boton.parentElement;
@@ -37,5 +38,16 @@ function agregarCarrito(evento) {
 }
 botonProducto.forEach((boton) => {
     boton.addEventListener("click", agregarCarrito);
+});
+/*Pagina del carrito */
+const carritoCompras = document.querySelector("#carrito-mostrar");
+const carritoArticulos = document.querySelectorAll(".carrito-articulo");
+console.log(carritoCompras);
+console.log(carritoArticulos);
+carritoArticulos.forEach(articulo => {
+    const precio = articulo.querySelector(".producto-price");
+    console.log(precio);
+    const precioNumerico = Number(precio?.textContent?.replace("$", ""));
+    console.log("El precio es de", precioNumerico, "dolares");
 });
 //# sourceMappingURL=store.js.map
