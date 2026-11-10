@@ -1,6 +1,10 @@
 const carrito = document.querySelector<HTMLButtonElement>("#carritoICON");
 const imagen = document.querySelector<HTMLImageElement>(".img-alt");
 const botonProducto = document.querySelectorAll<HTMLButtonElement>(".shop-item button");
+declare const gsap: any;
+declare const Flip: any;
+
+
 
 /* Lo de añadir productos al carrito */ 
 function agregarCarrito(evento: MouseEvent){
@@ -45,21 +49,136 @@ botonProducto.forEach((boton) => {
     boton.addEventListener("click", agregarCarrito);
 });
 
-/*Pagina del carrito */
+//Pagina del carrito
 
 const carritoCompras = document.querySelector<HTMLDivElement>("#carrito-mostrar");
 const carritoArticulos = document.querySelectorAll<HTMLElement>(".carrito-articulo");
 
+
+
 console.log(carritoCompras);
 console.log(carritoArticulos);
 
+let totalCarrito = 0;
+//Recorremos cada uno de los articulos para sacar sus datos.
 carritoArticulos.forEach(articulo => {
 
     const precio = articulo.querySelector(".producto-price");
-    console.log(precio);
+    const cantidad = articulo.querySelector(".quantity-value")
+
+    
+    const cantidadVerdadera = Number(cantidad?.textContent)
     const precioNumerico = Number(precio?.textContent?.replace("$",""));
-    console.log("El precio es de", precioNumerico, "dolares");
+
+
+    console.log("El precio es de", precioNumerico, "dolares", "y son", cantidadVerdadera, "Articulos");
     
-    
+//Cuando el usuario llegue a 0, el producto se va quitar de su carrito
+
+
+const subtotal = precioNumerico * cantidadVerdadera;
+totalCarrito += subtotal;
 
 });
+
+
+console.log("El total es de: ", totalCarrito);
+
+const botonIncrementar =  document.querySelectorAll<HTMLButtonElement>('[data-action="increase"]');
+const botonDecrementar = document.querySelectorAll<HTMLButtonElement>('[data-action="decrease');
+const botonEliminar =  document.querySelectorAll<HTMLButtonElement>('[data-action="delete"');
+botonIncrementar.forEach(boton => {
+    
+    boton.addEventListener('click' , (event) =>{
+        console.log("Boton incrementar presionado");
+        const articulo =  (event.currentTarget as  HTMLElement)
+            .closest('.carrito-articulo')
+        console.log(event.currentTarget);
+        const cantidad = articulo?.querySelector('.quantity-value')
+        let cantidadActual = Number(cantidad?.textContent)
+        console.log(cantidadActual);
+        cantidadActual += 1;
+        if(cantidad){
+                 cantidad.textContent = String(cantidadActual);
+        }    
+    })
+
+    
+});
+
+
+function eliminarArticulo(articulo: Element | null) {
+    if (!articulo) return;
+
+    const estado = Flip.getState('.carrito-articulo');
+
+    gsap.to(articulo, {
+        x: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power1.out",
+
+        onComplete: () => {
+            articulo.remove();
+
+            Flip.from(estado, {
+                duration: 0.5,
+                ease: "circ.out"
+            });
+        }
+    });
+}
+
+
+
+botonDecrementar.forEach(boton => {
+    boton.addEventListener('click', (event) => {
+        console.log("Boton decrementar presionado");
+
+        const articulo = (event.currentTarget as HTMLElement)
+            .closest('.carrito-articulo');
+
+        console.log(event.currentTarget);
+
+        const cantidad = articulo?.querySelector('.quantity-value');
+        let cantidadActual = Number(cantidad?.textContent);
+
+        if (cantidad && Number.isInteger(cantidadActual) && cantidadActual > 0) {
+            cantidadActual -= 1;
+
+            if (cantidadActual === 0) {
+                const confirmar = window.confirm(
+                    "This item will be removed from your cart. Continue?"
+                );
+
+                if (confirmar) {
+                    eliminarArticulo(articulo);
+                }
+            } else {
+                cantidad.textContent = String(cantidadActual);
+            }
+        }
+    });
+});
+
+
+
+botonEliminar.forEach(boton => {
+    boton.addEventListener('click', (event) => {
+        const articulo = (event.currentTarget as HTMLElement)
+            .closest('.carrito-articulo');
+
+        const confirmar = window.confirm("Remove this item?");
+
+        if (confirmar) {
+            eliminarArticulo(articulo);
+        }
+
+        console.log(confirmar);
+    });
+});
+
+
+
+
+
