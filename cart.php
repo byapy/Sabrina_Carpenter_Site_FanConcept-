@@ -28,7 +28,7 @@
 
                     <article class="carrito-articulo grid grid-cols-4 gap-3 max-[490px]:grid-cols-2">
                         <figure class="producto-img col-span-1 max-[490px]:col-span-2">
-                            <img src="src/articls/ceramic-tray.webp" alt="producto">
+                            <img src="src/images/articles/ceramic-tray.webp" alt="producto">
                         </figure>
                         <div class="info-producto col-span-2">
                             <h2 class="font-bold">Product 1</h2>
@@ -66,7 +66,7 @@
 
                     <article class="carrito-articulo grid grid-cols-4 gap-3 max-[490px]:grid-cols-2">
                         <figure class="producto-img col-span-1 max-[490px]:col-span-2">
-                            <img src="src/articls/ceramic-tray.webp" alt="producto">
+                            <img src="src/images/articles/ceramic-tray.webp" alt="producto">
                         </figure>
                         <div class="info-producto col-span-2">
                             <h2 class="font-bold">Product 1</h2>
