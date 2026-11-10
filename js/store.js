@@ -1,7 +1,9 @@
-"use strict";
 const carrito = document.querySelector("#carritoICON");
 const imagen = document.querySelector(".img-alt");
 const botonProducto = document.querySelectorAll(".shop-item button");
+// Ambas páginas cargan los archivos UMD locales antes de este módulo.
+const { gsap, Flip } = window;
+gsap.registerPlugin(Flip);
 /* Lo de añadir productos al carrito */
 function agregarCarrito(evento) {
     const boton = evento.currentTarget;
@@ -58,8 +60,8 @@ carritoArticulos.forEach(articulo => {
 });
 console.log("El total es de: ", totalCarrito);
 const botonIncrementar = document.querySelectorAll('[data-action="increase"]');
-const botonDecrementar = document.querySelectorAll('[data-action="decrease');
-const botonEliminar = document.querySelectorAll('[data-action="delete"');
+const botonDecrementar = document.querySelectorAll('[data-action="decrease"]');
+const botonEliminar = document.querySelectorAll('[data-action="delete"]');
 botonIncrementar.forEach(boton => {
     boton.addEventListener('click', (event) => {
         console.log("Boton incrementar presionado");
@@ -126,4 +128,5 @@ botonEliminar.forEach(boton => {
         console.log(confirmar);
     });
 });
+export {};
 //# sourceMappingURL=store.js.map

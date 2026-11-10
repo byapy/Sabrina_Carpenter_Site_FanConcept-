@@ -1,10 +1,20 @@
-const carrito = document.querySelector<HTMLButtonElement>("#carritoICON");
+import type { gsap as Gsap } from "gsap";
+import type { Flip as FlipPlugin } from "gsap/Flip";
+
+declare global {
+    interface Window {
+        gsap: typeof Gsap;
+        Flip: typeof FlipPlugin;
+    }
+}
+
+const carrito = document.querySelector<HTMLAnchorElement>("#carritoICON");
 const imagen = document.querySelector<HTMLImageElement>(".img-alt");
 const botonProducto = document.querySelectorAll<HTMLButtonElement>(".shop-item button");
-declare const gsap: any;
-declare const Flip: any;
+// Ambas páginas cargan los archivos UMD locales antes de este módulo.
+const { gsap, Flip } = window;
 
-
+gsap.registerPlugin(Flip);
 
 /* Lo de añadir productos al carrito */ 
 function agregarCarrito(evento: MouseEvent){
@@ -85,8 +95,8 @@ totalCarrito += subtotal;
 console.log("El total es de: ", totalCarrito);
 
 const botonIncrementar =  document.querySelectorAll<HTMLButtonElement>('[data-action="increase"]');
-const botonDecrementar = document.querySelectorAll<HTMLButtonElement>('[data-action="decrease');
-const botonEliminar =  document.querySelectorAll<HTMLButtonElement>('[data-action="delete"');
+const botonDecrementar = document.querySelectorAll<HTMLButtonElement>('[data-action="decrease"]');
+const botonEliminar =  document.querySelectorAll<HTMLButtonElement>('[data-action="delete"]');
 botonIncrementar.forEach(boton => {
     
     boton.addEventListener('click' , (event) =>{

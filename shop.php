@@ -124,7 +124,10 @@ try {
         </section>
     </main>
     <?php include 'layouts/footer.php'; ?>
-    <script src="js/navigation.js"></script>
-    <script src="js/store.js"></script>
+
+    <script src="js/vendor/gsap.min.js"></script>
+    <script src="js/vendor/Flip.min.js"></script>                           
+    <script type="module" src="js/navigation.js"></script>
+    <script type="module" src="js/store.js"></script>
 </body>
 </html>

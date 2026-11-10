@@ -32,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
     $password = $_POST['pwd_password'] ?? '';
 
     if (!is_string($csrfToken) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
-        $loginError = 'La solicitud no es válida. Inténtalo de nuevo.';
+        $loginError = 'Invalid request. Please try again.';
     } elseif ($email === false || !is_string($password) || $password === '') {
-        $loginError = 'Ingresa un correo electrónico y contraseña válidos.';
+        $loginError = 'Please enter a valid email address and password.';
     } else {
         try {
             $user = UserRepository::create()->findActiveByEmail($email);
@@ -51,10 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
                 exit;
             }
 
-            $loginError = 'Correo o contraseña incorrectos.';
+            $loginError = 'Incorrect email or password. Please try again.';
         } catch (PDOException $exception) {
-            error_log('No fue posible iniciar sesión: ' . $exception->getMessage());
-            $loginError = 'No se pudo conectar con el servicio de inicio de sesión.';
+            error_log('Unable to log in: ' . $exception->getMessage());
+            $loginError = 'We couldn’t connect to the login service. Please try again later';
         }
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register_submit'])) {
@@ -68,17 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
     $passwordConfirmation = $_POST['pwd_register_confirmation'] ?? '';
 
     if (!is_string($csrfToken) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
-        $registerError = 'La solicitud no es válida. Inténtalo de nuevo.';
+        $registerError = 'Invalid request. Please try again.';
     } elseif ($name === '' || strlen($name) > 60 || $lastName === '' || strlen($lastName) > 60) {
-        $registerError = 'Ingresa un nombre y apellido de hasta 60 caracteres.';
+        $registerError = 'Please enter a first and last name ';
     } elseif ($email === false) {
-        $registerError = 'Ingresa un correo electrónico válido.';
+        $registerError = 'Please enter a valid email address.';
     } elseif (strlen($address) > 300) {
-        $registerError = 'La dirección no puede superar los 300 caracteres.';
+        $registerError = 'Your address cannot exceed 300 characters.';
     } elseif (!is_string($password) || strlen($password) < 8) {
-        $registerError = 'La contraseña debe tener al menos 8 caracteres.';
+        $registerError = 'Your password must be at least 8 characters long.';
     } elseif (!is_string($passwordConfirmation) || !hash_equals($password, $passwordConfirmation)) {
-        $registerError = 'Las contraseñas no coinciden.';
+        $registerError = 'Your passwords do not match.';
     } else {
         try {
             $userId = UserRepository::create()->createCustomer(
@@ -99,10 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
             header('Location: index.php');
             exit;
         } catch (PDOException $exception) {
-            error_log('No fue posible registrar al usuario: ' . $exception->getMessage());
+            error_log('Unable to register user: ' . $exception->getMessage());
             $registerError = $exception->getCode() === '23000'
-                ? 'Ya existe una cuenta registrada con ese correo electrónico.'
-                : 'No se pudo crear la cuenta. Inténtalo de nuevo.';
+                ? 'An account with this email address already exists.'
+                : 'We couldn’t create your account. Please try again.';
         }
     }
 }

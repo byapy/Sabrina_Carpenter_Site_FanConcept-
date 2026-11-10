@@ -161,8 +161,8 @@
         </div>
     </footer>
     
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/Flip.min.js"></script>
-<script src="js/store.js"></script>
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/Flip.min.js"></script>
+<script type="module" src="js/store.js"></script>
 </body>
 </html>
