@@ -23,6 +23,7 @@
     margin-bottom: 0;
     flex-wrap: wrap;
 
+
 }
 .main-nav-link{
     color: var(--nav-text-color);
@@ -47,7 +48,12 @@ body{
 }
 .home-page{
     height: 100vh;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
+    background-image: url(../src/images/sabrina-hero-banner.webp);
+    background-size: cover;
+    background-position: center;
 }
 @supports (height: 100dvh){
     .home-page{
@@ -60,11 +66,10 @@ body{
   }
 }
 .page-content{
-    background-image: url(../src/images/sabrina-hero-banner.webp);
-    background-size: cover;
-    background-position: center;
+    background: transparent;
     overflow: hidden;
-    height: 100%;
+    height: auto;
+    flex: 1 1 auto;
     min-height: 0;
     position: relative;
 
@@ -103,10 +108,9 @@ body{
 .button-play-preview:hover{
     transform: scale(1.2);
 }
-.main-footer{
-    position: fixed;
-    inset: auto 0 0;
-    z-index: 10;
+.main-footer {
+    position: relative;
+    flex: 0 0 auto;
     width: 100%;
     padding: 0 1rem 1.25rem;
     box-sizing: border-box;

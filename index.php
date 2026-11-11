@@ -32,7 +32,8 @@
         include 'layouts/footer.php';
     ?>
 
-    
-    <script src="js/navigation.js"></script>
+    <script src="js/vendor/gsap.min.js"></script>
+    <script src="js/vendor/Flip.min.js"></script>
+    <script type="module" src="js/navigation.js"></script>
 </body>
 </html>

@@ -24,7 +24,6 @@ function agregarCarrito(evento: MouseEvent){
     if(producto != null ){
         const item = producto.parentElement;
         if(item){
-            //console.log(item);
             const imagen = item.querySelector<HTMLImageElement>(".img-normal");
             if (imagen && carrito){
                 const posicion = imagen.getBoundingClientRect();
@@ -42,7 +41,6 @@ function agregarCarrito(evento: MouseEvent){
 
                 boton.disabled = true;
                 requestAnimationFrame(() => {
-                    console.log("Moviendo hacia:", carritoPosicion.left, carritoPosicion.top);
                     copia.style.left = `${carritoPosicion.left + carritoPosicion.width / 2 - posicion.width / 2}px`;
                     copia.style.top = `${carritoPosicion.top + carritoPosicion.height / 2 - posicion.height / 2}px`;
                     copia.style.transform = "scale(0.2)";
@@ -66,9 +64,6 @@ const carritoArticulos = document.querySelectorAll<HTMLElement>(".carrito-articu
 
 
 
-console.log(carritoCompras);
-console.log(carritoArticulos);
-
 let totalCarrito = 0;
 //Recorremos cada uno de los articulos para sacar sus datos.
 carritoArticulos.forEach(articulo => {
@@ -81,7 +76,6 @@ carritoArticulos.forEach(articulo => {
     const precioNumerico = Number(precio?.textContent?.replace("$",""));
 
 
-    console.log("El precio es de", precioNumerico, "dolares", "y son", cantidadVerdadera, "Articulos");
     
 //Cuando el usuario llegue a 0, el producto se va quitar de su carrito
 
@@ -92,7 +86,6 @@ totalCarrito += subtotal;
 });
 
 
-console.log("El total es de: ", totalCarrito);
 
 const botonIncrementar =  document.querySelectorAll<HTMLButtonElement>('[data-action="increase"]');
 const botonDecrementar = document.querySelectorAll<HTMLButtonElement>('[data-action="decrease"]');

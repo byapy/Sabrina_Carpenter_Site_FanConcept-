@@ -2,9 +2,17 @@
 document.querySelectorAll(".main-nav").forEach((nav) => {
     const toggle = nav.querySelector(".menu-toggle");
     const links = nav.querySelectorAll(".main-nav-link");
+    const menu = nav.querySelector(".nav-items-list");
     if (!toggle) {
         return;
     }
+    gsap.fromTo(".nav-items-list", {
+        x: -40,
+        opacity: 0,
+    }, {
+        opacity: 1,
+        x: 0
+    });
     const closeMenu = () => {
         nav.classList.remove("is-open");
         toggle.setAttribute("aria-expanded", "false");
@@ -24,4 +32,5 @@ document.querySelectorAll(".main-nav").forEach((nav) => {
         }
     });
 });
+export {};
 //# sourceMappingURL=navigation.js.map

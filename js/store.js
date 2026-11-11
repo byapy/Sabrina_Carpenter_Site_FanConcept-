@@ -11,7 +11,6 @@ function agregarCarrito(evento) {
     if (producto != null) {
         const item = producto.parentElement;
         if (item) {
-            //console.log(item);
             const imagen = item.querySelector(".img-normal");
             if (imagen && carrito) {
                 const posicion = imagen.getBoundingClientRect();
@@ -25,7 +24,6 @@ function agregarCarrito(evento) {
                 copia.style.transition = 'all 1.5s ease';
                 boton.disabled = true;
                 requestAnimationFrame(() => {
-                    console.log("Moviendo hacia:", carritoPosicion.left, carritoPosicion.top);
                     copia.style.left = `${carritoPosicion.left + carritoPosicion.width / 2 - posicion.width / 2}px`;
                     copia.style.top = `${carritoPosicion.top + carritoPosicion.height / 2 - posicion.height / 2}px`;
                     copia.style.transform = "scale(0.2)";
@@ -44,8 +42,6 @@ botonProducto.forEach((boton) => {
 //Pagina del carrito
 const carritoCompras = document.querySelector("#carrito-mostrar");
 const carritoArticulos = document.querySelectorAll(".carrito-articulo");
-console.log(carritoCompras);
-console.log(carritoArticulos);
 let totalCarrito = 0;
 //Recorremos cada uno de los articulos para sacar sus datos.
 carritoArticulos.forEach(articulo => {
@@ -53,12 +49,10 @@ carritoArticulos.forEach(articulo => {
     const cantidad = articulo.querySelector(".quantity-value");
     const cantidadVerdadera = Number(cantidad?.textContent);
     const precioNumerico = Number(precio?.textContent?.replace("$", ""));
-    console.log("El precio es de", precioNumerico, "dolares", "y son", cantidadVerdadera, "Articulos");
     //Cuando el usuario llegue a 0, el producto se va quitar de su carrito
     const subtotal = precioNumerico * cantidadVerdadera;
     totalCarrito += subtotal;
 });
-console.log("El total es de: ", totalCarrito);
 const botonIncrementar = document.querySelectorAll('[data-action="increase"]');
 const botonDecrementar = document.querySelectorAll('[data-action="decrease"]');
 const botonEliminar = document.querySelectorAll('[data-action="delete"]');
