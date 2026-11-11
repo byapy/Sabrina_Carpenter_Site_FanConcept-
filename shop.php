@@ -112,7 +112,7 @@ try {
                         <div class="price-box"><h2 class="prices">$<?= number_format((float) $product['precio'], 2, '.', ',') ?></h2></div>
                         <div class="product-actions">
                             <?php if (!$isAuthenticated && !$isSoldOut): ?>
-                                <a href="login.php?form=register" class="shop-cart-button">Add to Cart</a>
+                                <a href="login.php" class="shop-cart-button">Add to Cart</a>
                             <?php else: ?>
                                 <button type="button" class="shop-cart-button<?= $isSoldOut ? ' sold-out-button' : '' ?>" <?= $isSoldOut ? 'disabled' : '' ?>>Add to Cart</button>
                             <?php endif; ?>

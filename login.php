@@ -127,6 +127,9 @@ require_once __DIR__ . '/controllers/auth.php';
                 rounded-b-sm
                 my-3
                 ">
+                <label for="txt_telefono" class="">Phone Number</label> <span class="font-light text-gray-400">Optional</span>
+                <input type="tel" name="txt_telefono" id="txt_telefono" data-placeholder="telefono" maxlength="20" autocomplete="tel"
+                class="w-full h-12 p-4 placeholder-stone-400 invalid:border-red-500 outline-2 outline-yellow-500 focus:outline-orange-500 transition hover:outline-yellow-400 rounded-b-sm my-3">
                 <label for="pwd_register" class="block">Password</label>
                 <input type="password" name="pwd_register" id="pwd_register" minlength="8" autocomplete="new-password" data-placeholder="contrasena"
                 class="w-full h-12 p-4 placeholder-stone-400 outline-2 outline-yellow-500 focus:outline-orange-500 transition hover:outline-yellow-400 rounded-b-sm my-3" required>

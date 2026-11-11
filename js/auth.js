@@ -20,6 +20,9 @@ const placeholders = {
     direccion: [
         "Where should we send the love?", "Your little corner of the world...", "1. Where can we find you, angel?"
     ],
+    telefono: [
+        "Your phone number...", "Where can we reach you?", "Your number, darling..."
+    ],
 };
 inputs.forEach(input => {
     const type = input.dataset.placeholder;

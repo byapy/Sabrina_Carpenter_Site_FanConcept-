@@ -30,17 +30,18 @@ final class UserRepository
         return $user ?: null;
     }
 
-    /** Crea un cliente activo. Teléfono no se incluye y queda NULL en la base de datos. */
+    /** Crea un cliente activo. */
     public function createCustomer(
         string $name,
         string $lastName,
         string $email,
         ?string $address,
+        ?string $phone,
         string $passwordHash
     ): int {
         $statement = $this->connection->prepare(
-            'INSERT INTO usuarios (nombre, apellido, rol_id, contrasena, correo, direccion, estado_id, fecha_registro)
-             VALUES (:nombre, :apellido, 2, :contrasena, :correo, :direccion, 1, NOW())'
+            'INSERT INTO usuarios (nombre, apellido, rol_id, contrasena, correo, direccion, telefono, estado_id, fecha_registro)
+             VALUES (:nombre, :apellido, 2, :contrasena, :correo, :direccion, :telefono, 1, NOW())'
         );
         $statement->execute([
             'nombre' => $name,
@@ -48,6 +49,7 @@ final class UserRepository
             'contrasena' => $passwordHash,
             'correo' => $email,
             'direccion' => $address,
+            'telefono' => $phone,
         ]);
 
         return (int) $this->connection->lastInsertId();

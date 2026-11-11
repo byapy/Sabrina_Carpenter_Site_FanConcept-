@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
     $emailInput = is_string($_POST['eml_email_register'] ?? null) ? $_POST['eml_email_register'] : '';
     $email = filter_var($emailInput, FILTER_VALIDATE_EMAIL);
     $address = is_string($_POST['txt_direccion'] ?? null) ? trim($_POST['txt_direccion']) : '';
+    $phone = is_string($_POST['txt_telefono'] ?? null) ? trim($_POST['txt_telefono']) : '';
     $password = $_POST['pwd_register'] ?? '';
     $passwordConfirmation = $_POST['pwd_register_confirmation'] ?? '';
 
@@ -75,6 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
         $registerError = 'Please enter a valid email address.';
     } elseif (strlen($address) > 300) {
         $registerError = 'Your address cannot exceed 300 characters.';
+    } elseif (strlen($phone) > 20) {
+        $registerError = 'Your phone number cannot exceed 20 characters.';
     } elseif (!is_string($password) || strlen($password) < 8) {
         $registerError = 'Your password must be at least 8 characters long.';
     } elseif (!is_string($passwordConfirmation) || !hash_equals($password, $passwordConfirmation)) {
@@ -86,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
                 $lastName,
                 $email,
                 $address === '' ? null : $address,
+                $phone === '' ? null : $phone,
                 password_hash($password, PASSWORD_DEFAULT)
             );
 
