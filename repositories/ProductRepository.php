@@ -30,4 +30,22 @@ final class ProductRepository
 
         return $statement->fetchAll();
     }
+
+    /** Obtiene un producto visible del catálogo por su ID. */
+    public function findPublicProductById(int $productId): ?array
+    {
+        $statement = $this->connection->prepare(
+            'SELECT p.producto_id, p.categoria_id, p.nombre, p.precio, p.stock, p.imagen_front, p.imagen_alt,
+                    c.nombre AS categoria_nombre, ep.nombre AS estado_nombre
+             FROM productos AS p
+             INNER JOIN categorias AS c ON c.categoria_id = p.categoria_id
+             INNER JOIN estados_productos AS ep ON ep.estado_id = p.estado_id
+             WHERE p.producto_id = :producto_id AND p.estado_id <> 103
+             LIMIT 1'
+        );
+        $statement->execute(['producto_id' => $productId]);
+
+        $product = $statement->fetch();
+        return $product ?: null;
+    }
 }

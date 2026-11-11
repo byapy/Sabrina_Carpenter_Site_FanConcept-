@@ -109,7 +109,7 @@ body{
     transform: scale(1.2);
 }
 .main-footer {
-    position: relative;
+    position: fixed;
     flex: 0 0 auto;
     width: 100%;
     padding: 0 1rem 1.25rem;
@@ -118,6 +118,10 @@ body{
     justify-content: space-between;
     align-items: flex-end;
     background-color: transparent;
+}
+.home-page .main-footer{
+    inset: auto 0 0;
+    z-index: 10;
 }
 .social-network-div{
     display: flex;
@@ -179,6 +183,11 @@ body{
     background-attachment: fixed;
 
 
+}
+.shop-body #smooth-content{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .shop-main-header{
@@ -304,7 +313,8 @@ body{
 }
 
 .shop-main{
-    margin: var(--shop-header-height) auto 100px;
+    margin: var(--shop-header-height) auto 24px;
+    flex: 1 0 auto;
     padding: 40px;
     width: min(100% - 20px, 1180px);
     box-sizing: border-box;
@@ -370,6 +380,13 @@ body{
     gap: 0.5rem;
     width: 100%;
     margin-top: auto;
+}
+.product-actions form{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+    margin: 0;
 }
 .product-actions .shop-cart-button{
     margin: 0;
@@ -920,7 +937,7 @@ body{
     }
 
     .shop-main{
-        margin: var(--shop-header-height) auto 40px;
+        margin: var(--shop-header-height) auto 24px;
         padding: 24px;
         width: 100%;
     }

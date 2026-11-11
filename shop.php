@@ -6,7 +6,51 @@ require_once __DIR__ . '/repositories/ProductRepository.php';
 session_start();
 
 $currentUserName = is_string($_SESSION['user']['name'] ?? null) ? $_SESSION['user']['name'] : null;
-$isAuthenticated = $currentUserName !== null;
+$isAuthenticated = is_int($_SESSION['user']['id'] ?? null) || ctype_digit((string) ($_SESSION['user']['id'] ?? ''));
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$cartError = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+    if (!$isAuthenticated) {
+        header('Location: login.php');
+        exit;
+    }
+
+    $csrfToken = $_POST['csrf_token'] ?? '';
+    $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+
+    if (!is_string($csrfToken) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
+        $cartError = 'Invalid request. Please try again.';
+    } elseif (!is_int($productId) || $productId < 1) {
+        $cartError = 'That product could not be added to your cart.';
+    } else {
+        try {
+            $product = ProductRepository::create()->findPublicProductById($productId);
+
+            if (!$product || (int) $product['stock'] < 1 || $product['estado_nombre'] === 'Agotado') {
+                $cartError = 'This product is currently unavailable.';
+            } else {
+                $cart = is_array($_SESSION['cart'] ?? null) ? $_SESSION['cart'] : [];
+                $currentQuantity = (int) ($cart[$productId] ?? 0);
+
+                if ($currentQuantity >= (int) $product['stock']) {
+                    $cartError = 'You already have the maximum available quantity of this product.';
+                } else {
+                    $cart[$productId] = $currentQuantity + 1;
+                    $_SESSION['cart'] = $cart;
+                    header('Location: cart.php?added=1');
+                    exit;
+                }
+            }
+        } catch (PDOException $exception) {
+            error_log('Unable to add product to cart: ' . $exception->getMessage());
+            $cartError = 'We could not update your cart. Please try again.';
+        }
+    }
+}
 
 // Puedes cambiar libremente los encabezados visibles de cada categoría aquí.
 $categoryTitles = [
@@ -80,6 +124,11 @@ try {
                     <main class="shop-main rounded-xl" id="">
             
             <section class="shop-feed select-none" id="">
+                <?php if ($cartError !== ''): ?>
+                    <p class="col-span-full rounded-md bg-red-100 p-3 text-red-700" role="alert">
+                        <?= htmlspecialchars($cartError, ENT_QUOTES, 'UTF-8') ?>
+                    </p>
+                <?php endif; ?>
                 <?php if ($catalogError !== ''): ?>
                     <p role="alert"><?= htmlspecialchars($catalogError, ENT_QUOTES, 'UTF-8') ?></p>
                 <?php endif; ?>
@@ -117,7 +166,11 @@ try {
                                 <?php if (!$isAuthenticated && !$isSoldOut): ?>
                                     <a href="login.php" class="shop-cart-button">Add to Cart</a>
                                 <?php else: ?>
-                                    <button type="button" class="shop-cart-button<?= $isSoldOut ? ' sold-out-button' : '' ?>" <?= $isSoldOut ? 'disabled' : '' ?>>Add to Cart</button>
+                                    <form action="shop.php" method="post">
+                                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                                        <input type="hidden" name="product_id" value="<?= (int) $product['producto_id'] ?>">
+                                        <button type="submit" name="add_to_cart" value="1" class="shop-cart-button<?= $isSoldOut ? ' sold-out-button' : '' ?>" <?= $isSoldOut ? 'disabled' : '' ?>>Add to Cart</button>
+                                    </form>
                                 <?php endif; ?>
                                 <a class="wishlist-button" href="cart.php" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
                             </div>

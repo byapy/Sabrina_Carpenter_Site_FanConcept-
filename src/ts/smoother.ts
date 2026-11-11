@@ -1,9 +1,5 @@
 "use strict";
 
-import type { gsap as Gsap } from "gsap";
-import type { ScrollTrigger as ScrollTriggerPlugin } from "gsap/ScrollTrigger";
-import type  { ScrollSmoother as ScrollSmootherPlugin } from "gsap/ScrollSmoother";
-
 declare global {
     interface Window {
         gsap: typeof import("gsap").gsap;
@@ -12,9 +8,14 @@ declare global {
     }
 }
 
+window.gsap.registerPlugin(window.ScrollTrigger, window.ScrollSmoother);
 
 const smoother = window.ScrollSmoother.create({
     wrapper: "#smooth-wrapper",
     content: "#smooth-content",
-    smooth: 1.5
+    smooth: 1.5,
+    effects: true,
+    smoothTouch: 0.1
 });
+
+export {};
