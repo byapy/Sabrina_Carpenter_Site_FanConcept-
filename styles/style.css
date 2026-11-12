@@ -176,7 +176,7 @@ body{
     position: relative;
     isolation: isolate;
     opacity: 1;
-    background-image: url(../src/images/sabrina-hero-banner-shop2.webp);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),url(../src/images/store-bg.webp);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -606,8 +606,7 @@ body{
 .sidebar button{
     width: 100%;
     padding: 0.75rem 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.35);
-    background-color: transparent;
+
     font-family: var(--nav-text-font-nav);
     font-size: 1.1rem;
     text-align: left;
@@ -797,10 +796,11 @@ body{
     cursor: pointer;
 }
 .cart-page{
-    background-image: url(../src/images/cart-wallpaper.webp);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),url(../src/images/cart-wallpaper.webp);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     height: 100%;
 }
 .cart-page .main-footer{

@@ -114,8 +114,8 @@ try {
 
         <div class="cart-wish-layout">
             <aside class="sidebar" aria-label="Cart navigation">
-                <button type="button" aria-current="page">Cart Shop</button>
-                <button type="button" disabled>Wishlist</button>
+                <button type="button" class="bg-red-100 border-1 rounded-xs border-black-200 hover:bg-red-300" aria-current="page">Cart Shop</button>
+                <button type="button" class="bg-red-100 border-1 rounded-xs border-black-200 hover:bg-red-300" disabled>Wishlist</button>
             </aside>
 
             <section class="contenido-switch rounded-md" aria-label="Shopping cart items">
