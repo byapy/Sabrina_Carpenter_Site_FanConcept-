@@ -14,7 +14,17 @@ if (empty($_SESSION['csrf_token'])) {
 
 $cartError = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+    $isAsyncRequest = ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'XMLHttpRequest';
+    $sendCartResponse = static function (int $status, array $data): void {
+        http_response_code($status);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data);
+        exit;
+    };
     if (!$isAuthenticated) {
+        if ($isAsyncRequest) {
+            $sendCartResponse(401, ['error' => 'Please sign in again to add products to your cart.']);
+        }
         header('Location: login.php');
         exit;
     }
@@ -41,7 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                 } else {
                     $cart[$productId] = $currentQuantity + 1;
                     $_SESSION['cart'] = $cart;
-                    header('Location: cart.php?added=1');
+                    if ($isAsyncRequest) {
+                        $sendCartResponse(200, ['success' => true]);
+                    }
+                    header('Location: shop.php', true, 303);
                     exit;
                 }
             }
@@ -49,6 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
             error_log('Unable to add product to cart: ' . $exception->getMessage());
             $cartError = 'We could not update your cart. Please try again.';
         }
+    }
+    if ($isAsyncRequest) {
+        $sendCartResponse(400, ['error' => $cartError]);
     }
 }
 

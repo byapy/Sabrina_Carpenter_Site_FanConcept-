@@ -99,7 +99,7 @@ try {
 <body class="cart-page">
     <main class="cart-wish-feed bordr rounded-md shadow-md">
         <header>
-            <h2>Cart</h2>
+            <h2 class="font-bold text-2xl antialiased md:subpixel-antialiased text-center ">Your Sweet Little Cart </h2>
         </header>
 
         <?php if ($cartError !== ''): ?>
@@ -114,16 +114,16 @@ try {
 
         <div class="cart-wish-layout">
             <aside class="sidebar" aria-label="Cart navigation">
-                <button type="button" aria-current="page">Carrito de Compras</button>
-                <button type="button" disabled>Lista de Deseados</button>
+                <button type="button" aria-current="page">Cart Shop</button>
+                <button type="button" disabled>Wishlist</button>
             </aside>
 
-            <section class="contenido-switch" aria-label="Shopping cart items">
+            <section class="contenido-switch rounded-md" aria-label="Shopping cart items">
                 <?php if ($items === []): ?>
                     <div class="carrito-vacio">
-                        <h5>Tu carrito de compras está vacío.</h5>
-                        <p>Aún no tienes productos en tu carrito.</p>
-                        <a href="shop.php">Browse the shop</a>
+                        <h5>Your Cart is empty.</h5>
+                        <p>You don't have any products in your cart yet.</p>
+
                     </div>
                 <?php else: ?>
                     <div id="carrito-mostrar">
@@ -173,16 +173,15 @@ try {
         </div>
 
         <section class="mt-5 flex w-full flex-col items-end gap-3">
-            <div class="flex w-full max-w-sm items-center justify-between gap-8 rounded-2xl border-2 border-rose-400 bg-rose-100 px-5 py-4 text-rose-950 shadow-lg sm:w-auto" aria-label="Cart total">
+            <div class="flex w-full max-w-sm items-center justify-between gap-8 rounded-2xl border-2 border-rose-200 bg-rose-100 px-5 py-4 text-rose-950 shadow-lg sm:w-auto" aria-label="Cart total">
                 <span class="text-base font-bold uppercase tracking-widest text-rose-900">Total</span>
-                <strong class="font-title text-4xl leading-none">$<?= number_format($total, 2, '.', ',') ?></strong>
+                <strong class=" text-4xl leading-none">$<?= number_format($total, 2, '.', ',') ?></strong>
             </div>
             <div class="botones-cart mt-0 w-full flex-col items-stretch sm:w-auto sm:flex-row">
-                <button class="button cart-action-button cart-checkout-button" type="button" <?= $items === [] ? 'disabled' : '' ?>>Pay</button>
+                <button class="button cart-action-button cart-checkout-button" type="button" <?= $items === [] ? 'disabled' : '' ?>>Proceed to Checkout</button>
                 <a class="button cart-action-button cart-back-button" href="shop.php">Back to Shop</a>
             </div>
         </section>
     </main>
-    <?php include __DIR__ . '/layouts/footer.php'; ?>
 </body>
 </html>

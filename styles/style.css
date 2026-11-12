@@ -657,12 +657,12 @@ body{
     border-color: #373b3e;
 }
 .cart-back-button{
-    background-color: #dc3545;
-    border-color: #dc3545;
+    background-color: #fc8991;
+    border-color: #FECDD3;
 }
 .cart-back-button:hover{
-    background-color: #bb2d3b;
-    border-color: #b02a37;
+    background-color: #e65765;
+    border-color: #da4958;
 }
 
 #carrito-mostrar{
@@ -796,7 +796,13 @@ body{
     padding: 0 !important;
     cursor: pointer;
 }
-
+.cart-page{
+    background-image: url(../src/images/cart-wallpaper.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+}
 .cart-page .main-footer{
     position: static;
 }
