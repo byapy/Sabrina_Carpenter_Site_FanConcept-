@@ -40,23 +40,24 @@ addToCartButtons.forEach((button) => {
             imageCopy.style.left = `${imagePosition.left}px`;
             imageCopy.style.top = `${imagePosition.top}px`;
             imageCopy.style.width = `${imagePosition.width}px`;
+            imageCopy.style.height = `${imagePosition.height}px`;
             imageCopy.style.zIndex = "1000";
             imageCopy.style.pointerEvents = "none";
-            imageCopy.style.transition = "all 700ms ease";
             document.body.appendChild(imageCopy);
-            button.disabled = true;
 
-            requestAnimationFrame(() => {
-                imageCopy.style.left = `${cartPosition.left + cartPosition.width / 2 - imagePosition.width / 2}px`;
-                imageCopy.style.top = `${cartPosition.top + cartPosition.height / 2 - imagePosition.height / 2}px`;
-                imageCopy.style.transform = "scale(0.2)";
-                imageCopy.style.opacity = "0.5";
-            });
-
-            await new Promise<void>((resolve) => window.setTimeout(() => {
+            try {
+                // Explicit keyframes restart the flight even when the image is cached.
+                const animation = imageCopy.animate([
+                    { transform: "translate(0, 0) scale(1)", opacity: 1 },
+                    {
+                        transform: `translate(${cartPosition.left + cartPosition.width / 2 - imagePosition.left - imagePosition.width / 2}px, ${cartPosition.top + cartPosition.height / 2 - imagePosition.top - imagePosition.height / 2}px) scale(0.2)`,
+                        opacity: 0.5,
+                    },
+                ], { duration: 700, easing: "ease", fill: "forwards" });
+                await animation.finished;
+            } finally {
                 imageCopy.remove();
-                resolve();
-            }, 750));
+            }
         } catch (error) {
             const message = document.createElement("p");
             message.setAttribute("role", "alert");

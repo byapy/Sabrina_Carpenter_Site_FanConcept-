@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/repositories/ProductRepository.php';
+require_once __DIR__ . '/repositories/WishlistRepository.php';
 
 session_start();
 
@@ -16,8 +17,30 @@ if (empty($_SESSION['csrf_token'])) {
 
 $cart = is_array($_SESSION['cart'] ?? null) ? $_SESSION['cart'] : [];
 $cartError = '';
+$isWishlistRequest = $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist_action']);
+$isWishlist = $isWishlistRequest || (($_GET['view'] ?? '') === 'wishlist' && $_SERVER['REQUEST_METHOD'] !== 'POST');
+$viewName = $isWishlist ? 'Wishlist' : 'Cart';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($isWishlistRequest) {
+    $csrfToken = $_POST['csrf_token'] ?? '';
+    $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+    if (!is_string($csrfToken) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
+        $cartError = 'Invalid request. Please try again.';
+    } elseif ($_POST['wishlist_action'] !== 'remove' || !is_int($productId) || $productId < 1) {
+        $cartError = 'Invalid wishlist action. Please try again.';
+    } else {
+        try {
+            WishlistRepository::create()->remove((int) $_SESSION['user']['id'], $productId);
+            header('Location: cart.php?view=wishlist', true, 303);
+            exit;
+        } catch (PDOException $exception) {
+            error_log('Unable to remove wishlist item: ' . $exception->getMessage());
+            $cartError = 'We could not update your wishlist. Please try again.';
+        }
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isWishlistRequest) {
     $csrfToken = $_POST['csrf_token'] ?? '';
     $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
     $action = is_string($_POST['cart_action'] ?? null) ? $_POST['cart_action'] : '';
@@ -64,7 +87,12 @@ $items = [];
 $total = 0.0;
 try {
     $productRepository = ProductRepository::create();
-    foreach ($cart as $productId => $quantity) {
+    $productsToLoad = $cart;
+    if ($isWishlist) {
+        $items = WishlistRepository::create()->findByUserId((int) $_SESSION['user']['id']);
+        $productsToLoad = [];
+    }
+    foreach ($productsToLoad as $productId => $quantity) {
         $product = $productRepository->findPublicProductById((int) $productId);
         if (!$product || (int) $product['stock'] < 1 || $product['estado_nombre'] === 'Agotado') {
             unset($cart[$productId]);
@@ -80,7 +108,9 @@ try {
     $_SESSION['cart'] = $cart;
 } catch (PDOException $exception) {
     error_log('Unable to load cart: ' . $exception->getMessage());
-    $cartError = 'We could not load your cart. Please try again later.';
+    $cartError = $isWishlist
+        ? 'We could not load your wishlist. Please try again later.'
+        : 'We could not load your cart. Please try again later.';
 }
 ?>
 <!DOCTYPE html>
@@ -94,12 +124,12 @@ try {
     <link rel="shortcut icon" href="src/icons/favicon.webp" type="image/x-icon">
     <link rel="stylesheet" href="styles/output.css">
     <link rel="stylesheet" href="styles/style.css">
-    <title>Sabrina Carpenter - Cart</title>
+    <title>Sabrina Carpenter - <?= $viewName ?></title>
 </head>
 <body class="cart-page">
     <main class="cart-wish-feed bordr rounded-md shadow-md">
         <header>
-            <h2 class="font-bold text-2xl antialiased md:subpixel-antialiased text-center ">Your Sweet Little Cart </h2>
+            <h2 class="font-bold text-2xl antialiased md:subpixel-antialiased text-center ">Your Sweet Little <?= $viewName ?> </h2>
         </header>
 
         <?php if ($cartError !== ''): ?>
@@ -108,21 +138,22 @@ try {
             </p>
         <?php endif; ?>
 
-        <?php if (isset($_GET['added'])): ?>
+        <?php if (!$isWishlist && isset($_GET['added'])): ?>
             <p class="my-3 rounded-md bg-green-100 p-3 text-sm text-green-800" role="status">Product added to your cart.</p>
         <?php endif; ?>
 
+        <form id="collection-navigation" method="get" action="cart.php"></form>
         <div class="cart-wish-layout">
             <aside class="sidebar" aria-label="Cart navigation">
-                <button type="button" class="bg-red-100 border-1 rounded-xs border-black-200 hover:bg-red-300" aria-current="page">Cart Shop</button>
-                <button type="button" class="bg-red-100 border-1 rounded-xs border-black-200 hover:bg-red-300" disabled>Wishlist</button>
+                <button type="submit" form="collection-navigation" name="view" value="cart" class="bg-red-100 border-1 rounded-xs border-black-200 hover:bg-red-300" <?= !$isWishlist ? 'aria-current="page"' : '' ?>>Cart Shop</button>
+                <button type="submit" form="collection-navigation" name="view" value="wishlist" class="bg-red-100 border-1 rounded-xs border-black-200 hover:bg-red-300" <?= $isWishlist ? 'aria-current="page"' : '' ?>>Wishlist</button>
             </aside>
 
-            <section class="contenido-switch rounded-md" aria-label="Shopping cart items">
+            <section class="contenido-switch rounded-md" aria-label="<?= $isWishlist ? 'Wishlist items' : 'Shopping cart items' ?>">
                 <?php if ($items === []): ?>
                     <div class="carrito-vacio">
-                        <h5>Your Cart is empty.</h5>
-                        <p>You don't have any products in your cart yet.</p>
+                        <h5>Your <?= $viewName ?> is empty.</h5>
+                        <p>You don't have any products in your <?= strtolower($viewName) ?> yet.</p>
 
                     </div>
                 <?php else: ?>
@@ -137,6 +168,26 @@ try {
                                 <div class="info-producto col-span-2">
                                     <h2 class="font-bold"><?= htmlspecialchars((string) $item['nombre'], ENT_QUOTES, 'UTF-8') ?></h2>
                                     <p><?= htmlspecialchars((string) $item['categoria_nombre'], ENT_QUOTES, 'UTF-8') ?></p>
+                                    <?php if ($isWishlist): ?>
+                                        <?php $addedAt = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', (string) $item['fecha_agregado']); ?>
+                                        <p>Added on:
+                                            <?php if ($addedAt !== false): ?>
+                                                <time datetime="<?= $addedAt->format('Y-m-d\TH:i:s') ?>"><?= $addedAt->format('d/m/Y H:i') ?></time>
+                                            <?php else: ?>
+                                                <?= htmlspecialchars((string) $item['fecha_agregado'], ENT_QUOTES, 'UTF-8') ?>
+                                            <?php endif; ?>
+                                        </p>
+                                        <form method="post" action="cart.php?view=wishlist">
+                                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                                            <input type="hidden" name="product_id" value="<?= (int) $item['producto_id'] ?>">
+                                            <button type="submit" name="wishlist_action" value="remove" class="delete-product-button rounded-md border p-3 block bg-red-300 hover:bg-red-400" aria-label="Remove <?= htmlspecialchars((string) $item['nombre'], ENT_QUOTES, 'UTF-8') ?> from wishlist" title="Remove from wishlist">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6m0-6 6 6"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                    <?php if (!$isWishlist): ?>
                                     <div class="product-purchase-details">
                                         <div class="product-price-card">
                                             <span class="product-detail-label">Price</span>
@@ -164,6 +215,7 @@ try {
                                             </div>
                                         </div>
                                     </div>
+                                    <?php endif; ?>
                                 </div>
                             </article>
                         <?php endforeach; ?>
@@ -172,6 +224,7 @@ try {
             </section>
         </div>
 
+        <?php if (!$isWishlist): ?>
         <section class="mt-5 flex w-full flex-col items-end gap-3">
             <div class="flex w-full max-w-sm items-center justify-between gap-8 rounded-2xl border-2 border-rose-200 bg-rose-100 px-5 py-4 text-rose-950 shadow-lg sm:w-auto" aria-label="Cart total">
                 <span class="text-base font-bold uppercase tracking-widest text-rose-900">Total</span>
@@ -182,6 +235,7 @@ try {
                 <a class="button cart-action-button cart-back-button" href="shop.php">Back to Shop</a>
             </div>
         </section>
+        <?php endif; ?>
     </main>
 </body>
 </html>

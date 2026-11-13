@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/repositories/ProductRepository.php';
+require_once __DIR__ . '/repositories/WishlistRepository.php';
 
 session_start();
 
@@ -13,6 +14,33 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 $cartError = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_wishlist'])) {
+    if (!$isAuthenticated) {
+        header('Location: login.php', true, 303);
+        exit;
+    }
+
+    $csrfToken = $_POST['csrf_token'] ?? '';
+    $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+    if (!is_string($csrfToken) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
+        $cartError = 'Invalid request. Please try again.';
+    } elseif (!is_int($productId) || $productId < 1) {
+        $cartError = 'That product could not be added to your wishlist.';
+    } else {
+        try {
+            if (!ProductRepository::create()->findPublicProductById($productId)) {
+                $cartError = 'This product is currently unavailable.';
+            } else {
+                WishlistRepository::create()->add((int) $_SESSION['user']['id'], $productId);
+                header('Location: cart.php?view=wishlist', true, 303);
+                exit;
+            }
+        } catch (PDOException $exception) {
+            error_log('Unable to add product to wishlist: ' . $exception->getMessage());
+            $cartError = 'We could not update your wishlist. Please try again.';
+        }
+    }
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     $isAsyncRequest = ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'XMLHttpRequest';
     $sendCartResponse = static function (int $status, array $data): void {
@@ -104,6 +132,10 @@ try {
     <title>Sabrina Carpenter - Store</title>
 </head>
 <body class="shop-body ">
+    <form id="add-to-wishlist" action="shop.php" method="post" hidden>
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+        <input type="hidden" name="add_to_wishlist" value="1">
+    </form>
     <div id="smooth-wrapper">
         <header class="shop-main-header">
             <?php include 'layouts/navbar.php'; ?>
@@ -188,7 +220,7 @@ try {
                                         <button type="submit" name="add_to_cart" value="1" class="shop-cart-button<?= $isSoldOut ? ' sold-out-button' : '' ?>" <?= $isSoldOut ? 'disabled' : '' ?>>Add to Cart</button>
                                     </form>
                                 <?php endif; ?>
-                                <a class="wishlist-button" href="cart.php" aria-label="View wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></a>
+                                <button type="submit" form="add-to-wishlist" name="product_id" value="<?= (int) $product['producto_id'] ?>" class="wishlist-button" aria-label="Add <?= htmlspecialchars($productName, ENT_QUOTES, 'UTF-8') ?> to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"></path></svg></button>
                             </div>
                         </article>
                     <?php endforeach; ?>
